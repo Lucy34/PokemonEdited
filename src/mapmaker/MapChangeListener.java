@@ -1,5 +1,8 @@
+package mapmaker;
 
 interface MapChangeListener {
-	public void mapChanging(boolean major);
-	public void mapChanged(boolean major);
+
+    public void mapChanging(boolean major);
+
+    public void mapChanged(boolean major);
 }
