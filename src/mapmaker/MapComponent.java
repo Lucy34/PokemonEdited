@@ -78,6 +78,7 @@ public class MapComponent extends JComponent implements MouseListener, MouseMoti
      * paints this component... basically renders the visible portion of the map
      * onto the given graphics context. also draws a grid...
      */
+    @Override
     synchronized public void paintComponent(Graphics g) {
         g.setColor(Color.white);
         g.fillRect(0, 0, width * tileWidth, height * tileHeight);
@@ -153,6 +154,7 @@ public class MapComponent extends JComponent implements MouseListener, MouseMoti
      12. Continue looping until Q is exhausted.
      13. Return.
      */
+    @SuppressWarnings("empty-statement")
     public void recursiveFlood(int x, int y, int layer, Tile target, Tile replacement) {
         if (x < 0 || x > map.getWidth() - 1
                 || y < 0 || y > map.getHeight() - 1) {
@@ -207,6 +209,7 @@ public class MapComponent extends JComponent implements MouseListener, MouseMoti
     int oldX = 0;
     int oldY = 0;
 
+    @Override
     public void mousePressed(MouseEvent e) {
         if (stateChanged) {
             saveUndoState();
@@ -242,6 +245,7 @@ public class MapComponent extends JComponent implements MouseListener, MouseMoti
         }
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
         switch (e.getButton()) {
             case MouseEvent.BUTTON1:
@@ -264,9 +268,11 @@ public class MapComponent extends JComponent implements MouseListener, MouseMoti
         }
     }
 
+    @Override
     public void mouseEntered(MouseEvent e) {
     }
 
+    @Override
     public void mouseDragged(MouseEvent e) {
         if (btn1Pressed && mapEdit.getPaintMode() != MapEdit.PAINT_FILL) {
             mapClicked(e.getX(), e.getY());
@@ -284,12 +290,15 @@ public class MapComponent extends JComponent implements MouseListener, MouseMoti
         }
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
     }
 
+    @Override
     public void mouseClicked(MouseEvent e) {
     }
 
+    @Override
     public void mouseMoved(MouseEvent e) {
     }
 
@@ -302,6 +311,7 @@ public class MapComponent extends JComponent implements MouseListener, MouseMoti
         hideLayers = hl;
     }
 
+    @Override
     public void mapChanging(boolean major) {
         if (!major) {
             saveUndoState();
@@ -310,6 +320,7 @@ public class MapComponent extends JComponent implements MouseListener, MouseMoti
         }
     }
 
+    @Override
     public void mapChanged(boolean major) {
         repaint();
     }

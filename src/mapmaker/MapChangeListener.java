@@ -1,6 +1,6 @@
 package mapmaker;
 
-interface MapChangeListener {
+public interface MapChangeListener {
 
     public void mapChanging(boolean major);
 

@@ -236,9 +236,7 @@ public class Map {
 
         for (int x = 0; x < w; x++) {
             for (int y = 0; y < h; y++) {
-                for (int j = 0; j < l; j++) {
-                    newTiles[x][y][j] = tiles[x][y][j];
-                }
+                System.arraycopy(tiles[x][y], 0, newTiles[x][y], 0, l);
             }
         }
         tiles = newTiles;
@@ -259,9 +257,7 @@ public class Map {
 
         for (int x = xStart; x < xEnd; x++) {
             for (int y = yStart; y < yEnd; y++) {
-                for (int l = 0; l < LAYERS; l++) {
-                    newTiles[x + offX][y + offY][l] = tiles[x][y][l];
-                }
+                System.arraycopy(tiles[x][y], 0, newTiles[x + offX][y + offY], 0, LAYERS);
             }
         }
         tiles = newTiles;

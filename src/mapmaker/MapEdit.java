@@ -1,8 +1,6 @@
 package mapmaker;
 
-import mapmaker.Scene;
 import java.awt.*;
-import java.awt.image.*;
 import java.awt.event.*;
 import javax.swing.event.*;
 import javax.swing.border.*;
@@ -16,7 +14,7 @@ import java.beans.*;
  * Map editor is curently able to do one layer maps. I intend to extend this to
  * three-layer maps, and to introduce some more interesting tiles to the set.
  */
-public class MapEdit implements ActionListener, ChangeListener, KeyListener {
+public final class MapEdit implements ActionListener, ChangeListener, KeyListener {
 
     boolean compactToolbars = true;
     boolean borderedButtons = true;
@@ -194,6 +192,7 @@ public class MapEdit implements ActionListener, ChangeListener, KeyListener {
         cp.add(split, BorderLayout.CENTER);
         /* NOTE: Creation of an anonymous inner class */
         split.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent ev) {
                 tileChooser.setWidth(split.getDividerLocation());
             }
@@ -269,6 +268,7 @@ public class MapEdit implements ActionListener, ChangeListener, KeyListener {
 
     class undoAction extends AbstractAction {
 
+        @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("CTRL Z pressed");
             undoBtn.doClick();
@@ -277,6 +277,7 @@ public class MapEdit implements ActionListener, ChangeListener, KeyListener {
 
     class redoAction extends AbstractAction {
 
+        @Override
         public void actionPerformed(ActionEvent ae) {
             System.out.println("CTRL Y pressed");
             redoBtn.doClick();
@@ -400,15 +401,18 @@ public class MapEdit implements ActionListener, ChangeListener, KeyListener {
         layerButtons[0].setSelected(true);
     }
 
+    @Override
     public void keyPressed(KeyEvent e) {
         System.out.println("pressed");
     }
 
+    @Override
     public void keyReleased(KeyEvent e) {
 
         System.out.println("released");
     }
 
+    @Override
     public void keyTyped(KeyEvent e) {
         System.out.println("typed");
 
@@ -416,6 +420,7 @@ public class MapEdit implements ActionListener, ChangeListener, KeyListener {
 
     /* This method now handles all buttons rather than
      * using anonymous inner classes to do it. */
+    @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
@@ -571,21 +576,21 @@ public class MapEdit implements ActionListener, ChangeListener, KeyListener {
      *
      */
     JButton makeBtn(String text, String icon, String tooltip) {
-        JButton newBtn;
+        JButton newNewBtn;
         try {
-            newBtn = new JButton(new ImageIcon(getClass().getResource(icon)));
+            newNewBtn = new JButton(new ImageIcon(getClass().getResource(icon)));
         } catch (Exception e) {
-            newBtn = new JButton(text);
+            newNewBtn = new JButton(text);
         }
-        newBtn.setToolTipText(tooltip);
-        newBtn.addActionListener(this);
+        newNewBtn.setToolTipText(tooltip);
+        newNewBtn.addActionListener(this);
         if (borderedButtons) {
-            newBtn.setBorder(new LineBorder(Color.gray, 1, false));
+            newNewBtn.setBorder(new LineBorder(Color.gray, 1, false));
         } else if (compactToolbars) {
-            newBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
+            newNewBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
         }
         //newBtn.setBorderPainted(false);
-        return newBtn;
+        return newNewBtn;
     }
 
     /**
@@ -598,20 +603,20 @@ public class MapEdit implements ActionListener, ChangeListener, KeyListener {
      *
      */
     JToggleButton makeToggleBtn(String text, String icon, String tooltip) {
-        JToggleButton newBtn;
+        JToggleButton newNewBtn;
         try {
-            newBtn = new JToggleButton(new ImageIcon(getClass().getResource(icon)));
+            newNewBtn = new JToggleButton(new ImageIcon(getClass().getResource(icon)));
         } catch (Exception e) {
-            newBtn = new JToggleButton(text);
+            newNewBtn = new JToggleButton(text);
         }
-        newBtn.setToolTipText(tooltip);
-        newBtn.addActionListener(this);
+        newNewBtn.setToolTipText(tooltip);
+        newNewBtn.addActionListener(this);
         if (borderedButtons) {
-            newBtn.setBorder(new LineBorder(Color.gray, 1, false));
+            newNewBtn.setBorder(new LineBorder(Color.gray, 1, false));
         } else if (compactToolbars) {
-            newBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
+            newNewBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
         }
-        return newBtn;
+        return newNewBtn;
     }
 
     /**
@@ -662,7 +667,7 @@ public class MapEdit implements ActionListener, ChangeListener, KeyListener {
             mainFrame.validate();
         } catch (Exception e) {
             PromptDialog.tell("Could not save: " + e, "OK");
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 
@@ -802,6 +807,7 @@ public class MapEdit implements ActionListener, ChangeListener, KeyListener {
     }
 
     /* State listener for the sliders in the colour pallette dialog */
+    @Override
     public void stateChanged(ChangeEvent e) {
         if (!ignoreEffects) {
             scene.setEffect(r.getValue() / 100f,
@@ -836,18 +842,18 @@ public class MapEdit implements ActionListener, ChangeListener, KeyListener {
         try {
             int success = tschooser.showOpenDialog(mainFrame);
             if (success == JFileChooser.APPROVE_OPTION) {
-                GraphicsBank g = new GraphicsBank();
-                g.loadTileset(tschooser.getSelectedFile());
-                setGraphicsBank(g);
+                GraphicsBank gg = new GraphicsBank();
+                gg.loadTileset(tschooser.getSelectedFile());
+                setGraphicsBank(gg);
             }
         } catch (FileNotFoundException e) {
             PromptDialog.tell("Selected file could not be found", "OK");
             System.out.println(e);
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         } catch (IOException e) {
             PromptDialog.tell("Could not read the file", "OK");
             System.out.println(e);
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 
@@ -861,7 +867,7 @@ public class MapEdit implements ActionListener, ChangeListener, KeyListener {
         } catch (IOException e) {
             PromptDialog.tell("Could not read the file", "OK");
             System.out.println(e);
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 
@@ -870,7 +876,6 @@ public class MapEdit implements ActionListener, ChangeListener, KeyListener {
         //System.out.print("The default OpenGL setting on this system is ");
         //System.out.print(System.getProperty("sun.java2d.opengl"));
         //System.setProperty("sun.java2d.opengl", "true");
-
-        new MapEdit();
+        MapEdit mapEdit = new MapEdit();
     }
 }

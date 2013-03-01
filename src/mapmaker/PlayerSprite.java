@@ -1,6 +1,5 @@
 package mapmaker;
 
-import mapmaker.Sprite;
 import java.awt.*;
 
 /**
@@ -26,14 +25,17 @@ public class PlayerSprite implements Sprite {
 
     }
 
+    @Override
     public void render(Graphics g, Camera c) {
         render(g, (int) c.viewx - c.viewWidth / 2, (int) c.viewy - c.viewWidth / 2);
     }
 
+    @Override
     public float getX() {
         return x;
     }
 
+    @Override
     public float getY() {
         return y;
     }
@@ -49,6 +51,7 @@ public class PlayerSprite implements Sprite {
      * override this method to update AI. Only use this method, as the render
      * method may be called even when the game is paused.
      */
+    @Override
     public void logic() {
     }
 }

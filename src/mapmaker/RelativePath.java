@@ -29,7 +29,7 @@ public class RelativePath {
                 r = r.getParentFile();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
             l = null;
         }
         return l;

@@ -1,14 +1,7 @@
 package mapmaker;
 
-import mapmaker.Map;
-import mapmaker.RelativePath;
-import mapmaker.Tile;
-import mapmaker.Sprite;
-import mapmaker.Camera;
-import mapmaker.GraphicsBank;
 import java.awt.*;
 import java.util.*;
-import java.net.*;
 import java.io.*;
 
 /**
@@ -72,60 +65,46 @@ public class Scene {
         float b = 1;
         float h = 0;
         float s = 1;
-
-        BufferedReader reader = new BufferedReader(new FileReader(f));
-
-        String line = reader.readLine();
-
-        StringTokenizer tokens = new StringTokenizer(line);
-        int width = Integer.parseInt(tokens.nextToken());
-        int height = Integer.parseInt(tokens.nextToken());
-
-        String tileset = tokens.nextToken();
-
-        GraphicsBank gfx = new GraphicsBank();
-
-        System.out.println("Attempt to load tileset " + tileset);
-
-        System.out.println("Working path is " + f.getParentFile());
-
-        File ts = new File(f.getParentFile(), tileset);
-        System.out.println("Attempt to load tileset " + ts.getAbsoluteFile());
-
-
-        gfx.loadTileset(ts);
-
-        Map map = new Map(width, height);
-
-        line = reader.readLine();
-        tokens = new StringTokenizer(line);
-
-        if (tokens.nextToken().equalsIgnoreCase("colorization")) {
-            hasColourEffect = true;
-            r = Float.parseFloat(tokens.nextToken());
-            g = Float.parseFloat(tokens.nextToken());
-            b = Float.parseFloat(tokens.nextToken());
-            h = Float.parseFloat(tokens.nextToken());
-            s = Float.parseFloat(tokens.nextToken());
-        }
-
-        while (!line.equals(".")) {
-            line = reader.readLine();
-        }
-
-
-        for (int z = 0; z < 3; z++) {
+        GraphicsBank gfx;
+        Map map;
+        try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
+            String line = reader.readLine();
+            StringTokenizer tokens = new StringTokenizer(line);
+            int width = Integer.parseInt(tokens.nextToken());
+            int height = Integer.parseInt(tokens.nextToken());
+            String tileset = tokens.nextToken();
+            gfx = new GraphicsBank();
+            System.out.println("Attempt to load tileset " + tileset);
+            System.out.println("Working path is " + f.getParentFile());
+            File ts = new File(f.getParentFile(), tileset);
+            System.out.println("Attempt to load tileset " + ts.getAbsoluteFile());
+            gfx.loadTileset(ts);
+            map = new Map(width, height);
             line = reader.readLine();
             tokens = new StringTokenizer(line);
+            if (tokens.nextToken().equalsIgnoreCase("colorization")) {
+                hasColourEffect = true;
+                r = Float.parseFloat(tokens.nextToken());
+                g = Float.parseFloat(tokens.nextToken());
+                b = Float.parseFloat(tokens.nextToken());
+                h = Float.parseFloat(tokens.nextToken());
+                s = Float.parseFloat(tokens.nextToken());
+            }
+            while (!line.equals(".")) {
+                line = reader.readLine();
+            }
+            for (int z = 0; z < 3; z++) {
+                line = reader.readLine();
+                tokens = new StringTokenizer(line);
 
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    String code = tokens.nextToken();
-                    map.setTile(x, y, z, gfx.getTile(Integer.parseInt(code)));
+                for (int y = 0; y < height; y++) {
+                    for (int x = 0; x < width; x++) {
+                        String code = tokens.nextToken();
+                        map.setTile(x, y, z, gfx.getTile(Integer.parseInt(code)));
+                    }
                 }
             }
         }
-        reader.close();
 
         Scene scene = new Scene(map, new ArrayList(), gfx);
         scene.tileset = gfx;
@@ -151,54 +130,53 @@ public class Scene {
         }
 
         try {
-            PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+            try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
+                String line;
 
-            String line = "";
-
-            int width = map.getWidth();
-            int height = map.getHeight();
-
-
-
-            File wd = new File(file.getParentFile().getCanonicalFile().toString());
-            File ts = new File(tileset.getFile().getCanonicalFile().toString());
-
-            String relativePath = RelativePath.getRelativePath(wd, ts);
+                int width = map.getWidth();
+                int height = map.getHeight();
 
 
 
-            line = width + " " + height + " " + relativePath;
-            writer.println(line);
+                File wd = new File(file.getParentFile().getCanonicalFile().toString());
+                File ts = new File(tileset.getFile().getCanonicalFile().toString());
 
-            line = "colorization " + effect_rScale
-                    + " " + effect_gScale
-                    + " " + effect_bScale
-                    + " " + effect_hue
-                    + " " + effect_sat;
-            writer.println(line);
+                String relativePath = RelativePath.getRelativePath(wd, ts);
 
-            System.out.println("Colorization red in save is " + effect_rScale);
-            writer.println(".");
 
-            for (int z = 0; z < 3; z++) {
-                for (int i = 0; i < height; i++) {
-                    for (int j = 0; j < width; j++) {
-                        Tile t = map.getTile(j, i, z);
-                        if (t != null) {
-                            writer.print(t.getNumber() + " ");
-                        } else {
-                            writer.print("0 ");
+
+                line = width + " " + height + " " + relativePath;
+                writer.println(line);
+
+                line = "colorization " + effect_rScale
+                        + " " + effect_gScale
+                        + " " + effect_bScale
+                        + " " + effect_hue
+                        + " " + effect_sat;
+                writer.println(line);
+
+                System.out.println("Colorization red in save is " + effect_rScale);
+                writer.println(".");
+
+                for (int z = 0; z < 3; z++) {
+                    for (int i = 0; i < height; i++) {
+                        for (int j = 0; j < width; j++) {
+                            Tile t = map.getTile(j, i, z);
+                            if (t != null) {
+                                writer.print(t.getNumber() + " ");
+                            } else {
+                                writer.print("0 ");
+                            }
+
+
                         }
 
-
                     }
-
+                    writer.println();
                 }
-                writer.println();
-            }
 
-            writer.flush();
-            writer.close();
+                writer.flush();
+            }
 
 
         } catch (IOException e) {

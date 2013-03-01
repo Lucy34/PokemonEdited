@@ -42,6 +42,7 @@ public class MapGame implements KeyListener {
         }
     }
 
+    @Override
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
@@ -67,6 +68,7 @@ public class MapGame implements KeyListener {
         mainFrame.setSize(800, 600);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }

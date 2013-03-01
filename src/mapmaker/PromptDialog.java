@@ -33,6 +33,7 @@ public class PromptDialog {
         d.setVisible(true);
 
         b1.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 ans = ((JButton) e.getSource()).getText();
                 d.dispose();
