@@ -1,5 +1,4 @@
 
-
 public class Actor {
 
     public int loc_x;
