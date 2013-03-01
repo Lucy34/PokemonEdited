@@ -17,7 +17,7 @@ import java.util.*;
  * bottom-right corner of the image. This means a large tile will extend above
  * and to the left over the top of other tiles behind it.<p>
  *
- * the map is only responsble for drawing unchanging tilesets. All interactive
+ * the map is only responsible for drawing unchanging tilesets. All interactive
  * stuff usually happens in the "Scene", using sprites, although the map does
  * support changing tiles on the fly if for example a switch were to move a
  * wall.
