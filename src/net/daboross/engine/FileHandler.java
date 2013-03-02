@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class contains various helpful functions
@@ -22,7 +23,7 @@ public final class FileHandler {
      * @param lines this is the text to put in the file
      * @return True if successful, false otherwise
      */
-    public static boolean WriteFile(File file, ArrayList<String> lines) {
+    public static boolean WriteFile(File file, List<String> lines) {
         if (lines == null || file == null) {
             return false;
         }
@@ -61,9 +62,9 @@ public final class FileHandler {
      * @param file this is the file to read from
      * @return The text in the file, or null if it doesn't exist
      */
-    public static ArrayList<String> ReadFile(File file) {
+    public static List<String> ReadFile(File file) {
         printErrF("File Handler: Reading File: " + file.toString());
-        ArrayList<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<String>();
         if (file.canRead()) {
             try {
                 FileReader fr = new FileReader(file);
@@ -94,9 +95,9 @@ public final class FileHandler {
      * starts with a /
      * @return an ArrayList of strings that is the text of the file
      */
-    public static ArrayList<String> ReadInternalFile(String filePath) {
+    public static List<String> ReadInternalFile(String filePath) {
         printErrF("File Handler: Reading Internal File: " + filePath);
-        ArrayList<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<String>();
         InputStream is = FileHandler.class.getResourceAsStream(filePath);
         if (is != null) {
             try {

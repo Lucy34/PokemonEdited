@@ -1,12 +1,25 @@
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.Graphics2D;
-import java.awt.Image.*;
-import java.util.*;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.geom.*;
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Random;
+import java.util.StringTokenizer;
+import net.daboross.engine.FileHandler;
 
 public class Pokemon extends JPanel implements KeyListener, ActionListener {
     //-----------------------------------------------------------------
@@ -629,7 +642,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
                 g.drawImage(gold.getSprite(), posX, posY, null);
                 g.setFont(pokefont);
                 g.setColor(Color.WHITE);
-                g.drawString("" + posX_tile + "," + posY_tile, 10, 25);
+                g.drawString(posX_tile + "," + posY_tile, 10, 25);
                 showMessageBox(g);
             } else {
                 encounter.paint(g);
@@ -1498,32 +1511,21 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
             oldsave.delete();
             File newsave = new File("Data/profile.sav");
             newsave.createNewFile();
-            bufferedWriter = new BufferedWriter(new FileWriter("Data/profile.sav"));
-            bufferedWriter.write(gold.getName());
-            bufferedWriter.newLine();
-            bufferedWriter.write("" + gold.getID());
-            bufferedWriter.newLine();
-            bufferedWriter.write("" + currentMap);
-            bufferedWriter.newLine();
-            bufferedWriter.write("" + posX_tile);
-            bufferedWriter.newLine();
-            bufferedWriter.write("" + posY_tile);
-            bufferedWriter.newLine();
-            bufferedWriter.write("" + money);
-            bufferedWriter.newLine();
-            bufferedWriter.write("" + playerPokemon1.getNumber());
-            bufferedWriter.newLine();
-            bufferedWriter.write("" + playerPokemon2.getNumber());
-            bufferedWriter.newLine();
-            bufferedWriter.write("" + playerPokemon3.getNumber());
-            bufferedWriter.newLine();
-            bufferedWriter.write("" + playerPokemon4.getNumber());
-            bufferedWriter.newLine();
-            bufferedWriter.write("" + playerPokemon5.getNumber());
-            bufferedWriter.newLine();
-            bufferedWriter.write("" + playerPokemon6.getNumber());
-            bufferedWriter.newLine();
-            bufferedWriter.write("'s Save File has been loaded.");
+            List<String> stringsToWrite = new ArrayList<String>();
+            stringsToWrite.add(gold.getName());
+            stringsToWrite.add(String.valueOf(gold.getID()));
+            stringsToWrite.add(String.valueOf(currentMap));
+            stringsToWrite.add(String.valueOf(posX_tile));
+            stringsToWrite.add(String.valueOf(posY_tile));
+            stringsToWrite.add(String.valueOf(money));
+            stringsToWrite.add(String.valueOf(playerPokemon1.getNumber()));
+            stringsToWrite.add(String.valueOf(playerPokemon2.getNumber()));
+            stringsToWrite.add(String.valueOf(playerPokemon3.getNumber()));
+            stringsToWrite.add(String.valueOf(playerPokemon4.getNumber()));
+            stringsToWrite.add(String.valueOf(playerPokemon5.getNumber()));
+            stringsToWrite.add(String.valueOf(playerPokemon6.getNumber()));
+            stringsToWrite.add("'s Save File has been loaded.");
+            FileHandler.WriteFile(newsave, stringsToWrite);
         } catch (FileNotFoundException ex) {
             ex.printStackTrace(System.err);
         } catch (IOException ex) {
@@ -1542,112 +1544,80 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
 
     public void loadGame() {
         File file = new File("Data/profile.sav");
-        FileInputStream fis;
-        BufferedInputStream bis;
-        DataInputStream dis;
-        try {
-            fis = new FileInputStream(file);
-            bis = new BufferedInputStream(fis);
-            dis = new DataInputStream(bis);
-            gold.setName(dis.readLine());
-            gold.setID(Integer.parseInt(dis.readLine()));
-            currentMap = dis.readLine();
-            currentX_loc = Integer.parseInt(dis.readLine()) - 7;
-            currentY_loc = Integer.parseInt(dis.readLine()) - 4;
-            posX_tile = currentX_loc + 7;
-            posY_tile = currentY_loc + 4;
-            money = Integer.parseInt(dis.readLine());
-            playerPokemon1.create(Integer.parseInt(dis.readLine()));
-            playerPokemon2.create(Integer.parseInt(dis.readLine()));
-            playerPokemon3.create(Integer.parseInt(dis.readLine()));
-            playerPokemon4.create(Integer.parseInt(dis.readLine()));
-            playerPokemon5.create(Integer.parseInt(dis.readLine()));
-            playerPokemon6.create(Integer.parseInt(dis.readLine()));
-            pokemonparty[0] = playerPokemon1;
-            pokemonparty[1] = playerPokemon2;
-            pokemonparty[2] = playerPokemon3;
-            pokemonparty[3] = playerPokemon4;
-            pokemonparty[4] = playerPokemon5;
-            pokemonparty[5] = playerPokemon6;
-            System.out.println(gold.getName() + dis.readLine());
-            fis.close();
-            bis.close();
-            dis.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace(System.err);
-        } catch (IOException e) {
-            e.printStackTrace(System.err);
-        }
+        List<String> fileContents = FileHandler.ReadFile(file);
+        ListIterator<String> contentsIterator = fileContents.listIterator();
+        gold.setName(contentsIterator.next());
+        gold.setID(Integer.parseInt(contentsIterator.next()));
+        currentMap = contentsIterator.next();
+        currentX_loc = Integer.parseInt(contentsIterator.next()) - 7;
+        currentY_loc = Integer.parseInt(contentsIterator.next()) - 4;
+        posX_tile = currentX_loc + 7;
+        posY_tile = currentY_loc + 4;
+        money = Integer.parseInt(contentsIterator.next());
+        playerPokemon1.create(Integer.parseInt(contentsIterator.next()));
+        playerPokemon2.create(Integer.parseInt(contentsIterator.next()));
+        playerPokemon3.create(Integer.parseInt(contentsIterator.next()));
+        playerPokemon4.create(Integer.parseInt(contentsIterator.next()));
+        playerPokemon5.create(Integer.parseInt(contentsIterator.next()));
+        playerPokemon6.create(Integer.parseInt(contentsIterator.next()));
+        pokemonparty[0] = playerPokemon1;
+        pokemonparty[1] = playerPokemon2;
+        pokemonparty[2] = playerPokemon3;
+        pokemonparty[3] = playerPokemon4;
+        pokemonparty[4] = playerPokemon5;
+        pokemonparty[5] = playerPokemon6;
+        System.out.println(gold.getName() + contentsIterator.next());
     }
 
     public void loadTileSet() {
-        File file = new File("Data/Tiles.tileset");
-        FileInputStream fis;
-        BufferedInputStream bis;
-        DataInputStream dis;
-        try {
-            fis = new FileInputStream(file);
-            bis = new BufferedInputStream(fis);
-            dis = new DataInputStream(bis);
-            for (int i = 0; i < tileset.length; i++) {
-                tileset[i] = tk.createImage(getClass().getResource("Graphics/" + dis.readLine()));
-            }
-            fis.close();
-            bis.close();
-            dis.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace(System.err);
-        } catch (IOException e) {
-            e.printStackTrace(System.err);
+        List<String> file = FileHandler.ReadInternalFile("Data/Tiles.tiletest");
+        ListIterator<String> fileIter = file.listIterator();
+        for (int i = 0; i < tileset.length; i++) {
+            tileset[i] = tk.createImage(getClass().getResource("Graphics/" + fileIter.next()));
         }
     }
 
     public void loadMap(String map) {
-        try {
-            float rV = 1;
-            float g = 1;
-            float b = 1;
-            float h = 0;
-            float s = 1;
-            boolean hasColourEffect = false;
-            try (BufferedReader reader = new BufferedReader(new FileReader(map))) {
-                String line = reader.readLine();
-                StringTokenizer tokens = new StringTokenizer(line);
-                int width = Integer.parseInt(tokens.nextToken());
-                int height = Integer.parseInt(tokens.nextToken());
-                mapTilesX = width;
-                mapTilesY = height;
-                String tilesetV = tokens.nextToken();
-                line = reader.readLine();
-                tokens = new StringTokenizer(line);
-                if (tokens.nextToken().equalsIgnoreCase("colorization")) {
-                    hasColourEffect = true;
-                    rV = Float.parseFloat(tokens.nextToken());
-                    g = Float.parseFloat(tokens.nextToken());
-                    b = Float.parseFloat(tokens.nextToken());
-                    h = Float.parseFloat(tokens.nextToken());
-                    s = Float.parseFloat(tokens.nextToken());
-                }
-                while (!line.equals(".")) {
-                    line = reader.readLine();
-                }
-                for (int layers = 0; layers < 2; layers++) {
-                    line = reader.readLine();
-                    tokens = new StringTokenizer(line);
-                    for (int y = 0; y < (width * height); y++) {
-                        String code = tokens.nextToken();
-                        if (layers == 0) {
-                            currentMap0[y] = Integer.parseInt(code);
-                        } else if (layers == 1) {
-                            currentMap1[y] = Integer.parseInt(code);
-                        }
-                    }
+        float rV = 1;
+        float g = 1;
+        float b = 1;
+        float h = 0;
+        float s = 1;
+        boolean hasColourEffect = false;
+        List<String> fileList = FileHandler.ReadFile(new File(map));
+        ListIterator<String> iterator = fileList.listIterator();
+        //BufferedReader reader = new BufferedReader(new FileReader(map));
+        String line = iterator.next();
+        StringTokenizer tokens = new StringTokenizer(line);
+        int width = Integer.parseInt(tokens.nextToken());
+        int height = Integer.parseInt(tokens.nextToken());
+        mapTilesX = width;
+        mapTilesY = height;
+        String tilesetV = tokens.nextToken();
+        line = iterator.next();
+        tokens = new StringTokenizer(line);
+        if (tokens.nextToken().equalsIgnoreCase("colorization")) {
+            hasColourEffect = true;
+            rV = Float.parseFloat(tokens.nextToken());
+            g = Float.parseFloat(tokens.nextToken());
+            b = Float.parseFloat(tokens.nextToken());
+            h = Float.parseFloat(tokens.nextToken());
+            s = Float.parseFloat(tokens.nextToken());
+        }
+        while (!line.equals(".")) {
+            line = iterator.next();
+        }
+        for (int layers = 0; layers < 2; layers++) {
+            line = iterator.next();
+            tokens = new StringTokenizer(line);
+            for (int y = 0; y < (width * height); y++) {
+                String code = tokens.nextToken();
+                if (layers == 0) {
+                    currentMap0[y] = Integer.parseInt(code);
+                } else if (layers == 1) {
+                    currentMap1[y] = Integer.parseInt(code);
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace(System.err);
-        } catch (IOException i) {
-            i.printStackTrace(System.err);
         }
     }
 
