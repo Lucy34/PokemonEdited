@@ -1547,27 +1547,29 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
         File file = new File("Data/profile.sav");
         List<String> fileContents = FileHandler.ReadFile(file);
         ListIterator<String> contentsIterator = fileContents.listIterator();
-        gold.setName(contentsIterator.next());
-        gold.setID(Integer.parseInt(contentsIterator.next()));
-        currentMap = contentsIterator.next();
-        currentX_loc = Integer.parseInt(contentsIterator.next()) - 7;
-        currentY_loc = Integer.parseInt(contentsIterator.next()) - 4;
-        posX_tile = currentX_loc + 7;
-        posY_tile = currentY_loc + 4;
-        money = Integer.parseInt(contentsIterator.next());
-        playerPokemon1.create(Integer.parseInt(contentsIterator.next()));
-        playerPokemon2.create(Integer.parseInt(contentsIterator.next()));
-        playerPokemon3.create(Integer.parseInt(contentsIterator.next()));
-        playerPokemon4.create(Integer.parseInt(contentsIterator.next()));
-        playerPokemon5.create(Integer.parseInt(contentsIterator.next()));
-        playerPokemon6.create(Integer.parseInt(contentsIterator.next()));
-        pokemonparty[0] = playerPokemon1;
-        pokemonparty[1] = playerPokemon2;
-        pokemonparty[2] = playerPokemon3;
-        pokemonparty[3] = playerPokemon4;
-        pokemonparty[4] = playerPokemon5;
-        pokemonparty[5] = playerPokemon6;
-        System.out.println(gold.getName() + contentsIterator.next());
+        if (fileContents.size() >= 13) {
+            gold.setName(contentsIterator.next());
+            gold.setID(Integer.parseInt(contentsIterator.next()));
+            currentMap = contentsIterator.next();
+            currentX_loc = Integer.parseInt(contentsIterator.next()) - 7;
+            currentY_loc = Integer.parseInt(contentsIterator.next()) - 4;
+            posX_tile = currentX_loc + 7;
+            posY_tile = currentY_loc + 4;
+            money = Integer.parseInt(contentsIterator.next());
+            playerPokemon1.create(Integer.parseInt(contentsIterator.next()));
+            playerPokemon2.create(Integer.parseInt(contentsIterator.next()));
+            playerPokemon3.create(Integer.parseInt(contentsIterator.next()));
+            playerPokemon4.create(Integer.parseInt(contentsIterator.next()));
+            playerPokemon5.create(Integer.parseInt(contentsIterator.next()));
+            playerPokemon6.create(Integer.parseInt(contentsIterator.next()));
+            pokemonparty[0] = playerPokemon1;
+            pokemonparty[1] = playerPokemon2;
+            pokemonparty[2] = playerPokemon3;
+            pokemonparty[3] = playerPokemon4;
+            pokemonparty[4] = playerPokemon5;
+            pokemonparty[5] = playerPokemon6;
+            System.out.println(gold.getName() + contentsIterator.next());
+        }
     }
 
     public void loadTileSet() {
