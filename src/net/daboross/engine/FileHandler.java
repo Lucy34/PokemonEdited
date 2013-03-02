@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class contains various helpful functions
+ * This class contains various helpful IO functions.
  */
 public final class FileHandler {
 
@@ -95,10 +95,11 @@ public final class FileHandler {
      * starts with a /
      * @return an ArrayList of strings that is the text of the file
      */
-    public static List<String> ReadInternalFile(String filePath) {
-        printErrF("File Handler: Reading Internal File: " + filePath);
+    public static List<String> ReadInternalFile(final String filePath) {
+        String path = filePath.startsWith("/") ? filePath : "/" + filePath;
+        printErrF("File Handler: Reading Internal File: " + path);
         List<String> lines = new ArrayList<String>();
-        InputStream is = FileHandler.class.getResourceAsStream(filePath);
+        InputStream is = FileHandler.class.getResourceAsStream(path);
         if (is != null) {
             try {
                 InputStreamReader isr = new InputStreamReader(is);
@@ -125,6 +126,8 @@ public final class FileHandler {
         printErrF("File Handler: Finished Reading Internal File: " + filePath);
         return lines;
     }
+
     public static void printErrF(String str) {
+        System.out.printf(str + "\n");
     }
 }

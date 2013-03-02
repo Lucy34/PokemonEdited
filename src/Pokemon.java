@@ -20,6 +20,7 @@ import java.util.ListIterator;
 import java.util.Random;
 import java.util.StringTokenizer;
 import net.daboross.engine.FileHandler;
+import net.daboross.engine.ImageHandler;
 
 public class Pokemon extends JPanel implements KeyListener, ActionListener {
     //-----------------------------------------------------------------
@@ -1570,10 +1571,10 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     }
 
     public void loadTileSet() {
-        List<String> file = FileHandler.ReadInternalFile("Data/Tiles.tiletest");
+        List<String> file = FileHandler.ReadInternalFile("/Data/Tiles.tileset");
         ListIterator<String> fileIter = file.listIterator();
         for (int i = 0; i < tileset.length; i++) {
-            tileset[i] = tk.createImage(getClass().getResource("Graphics/" + fileIter.next()));
+            tileset[i] = ImageHandler.getImage("/Graphics/" + fileIter.next());
         }
     }
 
@@ -1584,7 +1585,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
         float h = 0;
         float s = 1;
         boolean hasColourEffect = false;
-        List<String> fileList = FileHandler.ReadFile(new File(map));
+        List<String> fileList = FileHandler.ReadInternalFile(map);
         ListIterator<String> iterator = fileList.listIterator();
         //BufferedReader reader = new BufferedReader(new FileReader(map));
         String line = iterator.next();
