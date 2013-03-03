@@ -8,7 +8,7 @@ import net.daboross.will.pokemon.Pokemon;
 
 public final class ImageHandler {
 
-    public static BufferedImage getImage(String imgName){
+    public static BufferedImage getImage(String imgName) {
         String fullName = (imgName.startsWith("/") ? "/net/daboross/will/pokemon" : "/net/daboross/will/pokemon/") + imgName;
         BufferedImage img = null;
         URL fl = Pokemon.class.getResource(fullName);
@@ -17,6 +17,9 @@ public final class ImageHandler {
                 img = ImageIO.read(fl);
             } catch (IOException e) {
             }
+        }
+        if (img == null) {
+            System.out.println("ImageHandler: Image Not Found: " + fullName);
         }
         return img;
     }
