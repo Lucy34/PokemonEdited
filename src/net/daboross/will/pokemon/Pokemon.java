@@ -217,7 +217,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     private NPC school_student5 = new NPC(25, 86, "Citizen", "Whadaya want from me!", camperl, null);
     private NPC school_student6 = new NPC(24, 84, "Citizen", "You're never too old to learn about Pokemon.", baldman, null);
     private NPC mart_customer1 = new NPC(24, 106, "Citizen", "I wonder if they carry Pokeballs.", youngster, null);
-    private NPC store_clerk = new NPC(20, 107, "Citizen", "Can I help you with something?", shopkeep, null);
+    private NPC store_clerk = new NPC(21, 107, "Citizen", "Can I help you with something?", shopkeep, null);
     private NPC center_visitor1 = new NPC(40, 107, "Citizen", "You can heal your Pokemon by talking to Nurse Joy.", fatman, null);
     private NPC nurse_joy = new NPC(42, 105, "Citizen", "We hope to see you again!", nurse, null);
     private NPC bird_keeper1 = new NPC(5, 89, "Citizen", "I want to be like Falkner.", birdkeeperr, null);
@@ -392,7 +392,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
                     }
                     if (gold.crashTest(currentMapNPC[i]) != 0) {
                         if (collision == true) {
-                            col.playClip("Collision");
+                            //  col.playClip("Collision");
                             collision = false;
                         }
                     }
@@ -413,7 +413,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
                     }
                     if (gold.crashTest(currentMapStaticTiles[i]) != 0) {
                         if (collision == true) {
-                            col.playClip("Collision");
+                            // col.playClip("Collision");
                             collision = false;
                         }
                     }
@@ -709,6 +709,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
                             walking = true;
                         } else {
                             gold.setSprite(playerUp);
+                            col.playClip("Collision");
                         }
                     } else if (keyCode == KeyEvent.VK_DOWN) {
                         crashTest(currentMap0);
@@ -719,6 +720,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
                             walking = true;
                         } else {
                             gold.setSprite(playerDown);
+                            col.playClip("Collision");
                         }
                     } else if (keyCode == KeyEvent.VK_LEFT) {
                         crashTest(currentMap0);
@@ -729,6 +731,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
                             walking = true;
                         } else {
                             gold.setSprite(playerLeft);
+                            col.playClip("Collision");
                         }
                     } else if (keyCode == KeyEvent.VK_RIGHT) {
                         crashTest(currentMap0);
@@ -739,6 +742,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
                             walking = true;
                         } else {
                             gold.setSprite(playerRight);
+                            col.playClip("Collision");
                         }
                     } else if (keyCode == KeyEvent.VK_ENTER) {
                         System.out.println("Menu Button");
@@ -1131,13 +1135,6 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
         //Wild Pokemon Grass
         if (map[(posY_tile * mapTilesX) + posX_tile] == 17) {
             stepscount++;
-        }
-    }
-
-    public void collision() {
-        if (collision == true) {
-            col.playClip("Collision");
-            collision = false;
         }
     }
 
@@ -1552,28 +1549,28 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
         List<String> fileContents = FileHandler.ReadFile(file);
         ListIterator<String> contentsIterator = fileContents.listIterator();
         if (fileContents.size() >= 13) {
-            gold.setName(contentsIterator.next());
-            gold.setID(Integer.parseInt(contentsIterator.next()));
-            currentMap = contentsIterator.next();
-            currentX_loc = Integer.parseInt(contentsIterator.next()) - 7;
-            currentY_loc = Integer.parseInt(contentsIterator.next()) - 4;
-            posX_tile = currentX_loc + 7;
-            posY_tile = currentY_loc + 4;
-            money = Integer.parseInt(contentsIterator.next());
-            playerPokemon1.create(Integer.parseInt(contentsIterator.next()));
-            playerPokemon2.create(Integer.parseInt(contentsIterator.next()));
-            playerPokemon3.create(Integer.parseInt(contentsIterator.next()));
-            playerPokemon4.create(Integer.parseInt(contentsIterator.next()));
-            playerPokemon5.create(Integer.parseInt(contentsIterator.next()));
-            playerPokemon6.create(Integer.parseInt(contentsIterator.next()));
-            pokemonparty[0] = playerPokemon1;
-            pokemonparty[1] = playerPokemon2;
-            pokemonparty[2] = playerPokemon3;
-            pokemonparty[3] = playerPokemon4;
-            pokemonparty[4] = playerPokemon5;
-            pokemonparty[5] = playerPokemon6;
-            System.out.println(gold.getName() + contentsIterator.next());
-        }
+        gold.setName(contentsIterator.next());
+        gold.setID(Integer.parseInt(contentsIterator.next()));
+        currentMap = contentsIterator.next();
+        currentX_loc = Integer.parseInt(contentsIterator.next()) - 7;
+        currentY_loc = Integer.parseInt(contentsIterator.next()) - 4;
+        posX_tile = currentX_loc + 7;
+        posY_tile = currentY_loc + 4;
+        money = Integer.parseInt(contentsIterator.next());
+        playerPokemon1.create(Integer.parseInt(contentsIterator.next()));
+        playerPokemon2.create(Integer.parseInt(contentsIterator.next()));
+        playerPokemon3.create(Integer.parseInt(contentsIterator.next()));
+        playerPokemon4.create(Integer.parseInt(contentsIterator.next()));
+        playerPokemon5.create(Integer.parseInt(contentsIterator.next()));
+        playerPokemon6.create(Integer.parseInt(contentsIterator.next()));
+        pokemonparty[0] = playerPokemon1;
+        pokemonparty[1] = playerPokemon2;
+        pokemonparty[2] = playerPokemon3;
+        pokemonparty[3] = playerPokemon4;
+        pokemonparty[4] = playerPokemon5;
+        pokemonparty[5] = playerPokemon6;
+        System.out.println(gold.getName() + contentsIterator.next());
+    }
     }
 
     public void loadTileSet() {
