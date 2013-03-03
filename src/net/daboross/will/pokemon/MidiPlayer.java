@@ -27,7 +27,7 @@ public class MidiPlayer implements Runnable {
 
     public void start() {
         nextAction.add(1);
-        if (threadRunning = false) {
+        if (threadRunning == false) {
             Thread th = new Thread(this);
             th.start();
         }
