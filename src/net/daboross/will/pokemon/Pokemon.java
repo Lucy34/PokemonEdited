@@ -135,7 +135,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     // Map Variables
     //-----------------------------------------------------------------
     private Image[] tileset = new Image[1112];
-    private String Johto = "Data/Johto.map";
+    private String Johto = "net/daboross/will/pokemon/data/Johto.map";
     private String currentMap = "Cherrygrove City";
     private String currentMapName = Johto;
     private boolean changemap = false;
