@@ -1466,12 +1466,17 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     // Main
     //-----------------------------------------------------------------
     public void startgame(boolean continued) {
+        System.out.println("Starting Game");
         loadTileSet();
+        System.out.println("Finished Loading Tile Set");
         loadMap(currentMapName);
         if (continued == true) {
+            System.out.println("Loading Game");
             loadGame();
             mainitems[0][3] = potion;
+            System.out.println("Finished Loading Game");
         } else {
+            System.out.println("Creating New Game");
             name = "Gold";
             gold.setName(name);
             gold.createTrainerID();
@@ -1494,16 +1499,21 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
             pokemonparty[5] = playerPokemon6;
             mainitems[0][3] = potion;
             money = 2000;
+            System.out.println("Finished Creating New Game");
         }
+        System.out.println("Stopping Music");
         currentBGM.stop();
         currentBGM = cherrygrovecity;
+        System.out.println("Starting Music");
         currentBGM.start();
+        System.out.println("Finished Starting Music");
         player = playerDown;
         atTitle = false;
         atContinueScreen = false;
         gamestarted = true;
         movable = true;
-        timePlayed = java.lang.System.currentTimeMillis();
+        timePlayed = System.currentTimeMillis();
+        System.out.println("Finished Starting Game");
     }
 
     public void saveGame() {
