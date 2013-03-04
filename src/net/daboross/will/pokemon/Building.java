@@ -2,7 +2,7 @@ package net.daboross.will.pokemon;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import net.daboross.engine.ImageHandler;
+import net.daboross.gameengine.graphics.ImageHandler;
 
 public class Building extends Actor {
 
@@ -34,13 +34,13 @@ public class Building extends Actor {
     public void paint(Graphics g) {
         if ("PokeMart".equals(type)) {
             for (int i = 0; i <= 15; i++) {
-                sprites[i] = ImageHandler.getImage("graphics/tiles/mart/tiles-" + i + ".png");
+                sprites[i] = ImageHandler.staticGetImage("graphics/tiles/mart/tiles-" + i + ".png");
                 g.drawImage(sprites[i], super.getX() + (i * 32), super.getY() + (i * 32), null);
             }
         }
         if ("PokeCenter".equals(type)) {
             for (int i = 0; i <= 19; i++) {
-                sprites[i] = ImageHandler.getImage("graphics/tiles/pokecenter/tiles-" + i + ".png");
+                sprites[i] = ImageHandler.staticGetImage("graphics/tiles/pokecenter/tiles-" + i + ".png");
                 g.drawImage(sprites[i], super.getX() + (i * 32), super.getY() + (i * 32), null);
             }
         }

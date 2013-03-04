@@ -1,11 +1,11 @@
 package net.daboross.will.pokemon;
 
 import java.awt.Image;
-import net.daboross.engine.ImageHandler;
+import net.daboross.gameengine.graphics.ImageHandler;
 
 public class MessageBox {
 
-    private Image msgbox = ImageHandler.getImage("graphics/pictures/Message_Text.png");
+    private Image msgbox = ImageHandler.staticGetImage("graphics/pictures/Message_Text.png");
     private String text;
     //private int lines;
     private int style;

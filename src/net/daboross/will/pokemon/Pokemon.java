@@ -24,8 +24,8 @@ import java.util.Random;
 import java.util.StringTokenizer;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import net.daboross.engine.FileHandler;
-import net.daboross.engine.ImageHandler;
+import net.daboross.gameengine.FileHandler;
+import net.daboross.gameengine.graphics.ImageHandler;
 
 public class Pokemon extends JPanel implements KeyListener, ActionListener {
     //-----------------------------------------------------------------
@@ -47,9 +47,9 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     public static JFrame jf;
     private javax.swing.Timer gameTimer;
     private Font pokefont = new Font("pokesl1", Font.PLAIN, 18);
-    private Image titlescreen = ImageHandler.getImage(("graphics/titles/Pic_2.png"));
-    private Image start_symbol = ImageHandler.getImage(("graphics/titles/Start.png"));
-    private Image continuescreen = ImageHandler.getImage(("graphics/pictures/Continue.png"));
+    private Image titlescreen = ImageHandler.staticGetImage(("graphics/titles/Pic_2.png"));
+    private Image start_symbol = ImageHandler.staticGetImage(("graphics/titles/Start.png"));
+    private Image continuescreen = ImageHandler.staticGetImage(("graphics/pictures/Continue.png"));
     private boolean atTitle = true;
     private boolean atContinueScreen = false;
     private boolean start_visible = true;
@@ -70,20 +70,20 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     //-----------------------------------------------------------------
     public String name = "Gold";
     public int trainerID;
-    public Image cardSprite = ImageHandler.getImage(("graphics/characters/battle/trainer000.png"));
-    private Image player = ImageHandler.getImage(("graphics/characters/player/Down.png"));
-    private Image playerUp = ImageHandler.getImage(("graphics/characters/player/Up.png"));
-    private Image playerUp1 = ImageHandler.getImage(("graphics/characters/player/Up1.png"));
-    private Image playerUp2 = ImageHandler.getImage(("graphics/characters/player/Up2.png"));
-    private Image playerDown = ImageHandler.getImage(("graphics/characters/player/Down.png"));
-    private Image playerDown1 = ImageHandler.getImage(("graphics/characters/player/Down1.png"));
-    private Image playerDown2 = ImageHandler.getImage(("graphics/characters/player/Down2.png"));
-    private Image playerLeft = ImageHandler.getImage(("graphics/characters/player/Left.png"));
-    private Image playerLeft1 = ImageHandler.getImage(("graphics/characters/player/Left1.png"));
-    private Image playerLeft2 = ImageHandler.getImage(("graphics/characters/player/Left2.png"));
-    private Image playerRight = ImageHandler.getImage(("graphics/characters/player/Right.png"));
-    private Image playerRight1 = ImageHandler.getImage(("graphics/characters/player/Right1.png"));
-    private Image playerRight2 = ImageHandler.getImage(("graphics/characters/player/Right2.png"));
+    public Image cardSprite = ImageHandler.staticGetImage(("graphics/characters/battle/trainer000.png"));
+    private Image player = ImageHandler.staticGetImage(("graphics/characters/player/Down.png"));
+    private Image playerUp = ImageHandler.staticGetImage(("graphics/characters/player/Up.png"));
+    private Image playerUp1 = ImageHandler.staticGetImage(("graphics/characters/player/Up1.png"));
+    private Image playerUp2 = ImageHandler.staticGetImage(("graphics/characters/player/Up2.png"));
+    private Image playerDown = ImageHandler.staticGetImage(("graphics/characters/player/Down.png"));
+    private Image playerDown1 = ImageHandler.staticGetImage(("graphics/characters/player/Down1.png"));
+    private Image playerDown2 = ImageHandler.staticGetImage(("graphics/characters/player/Down2.png"));
+    private Image playerLeft = ImageHandler.staticGetImage(("graphics/characters/player/Left.png"));
+    private Image playerLeft1 = ImageHandler.staticGetImage(("graphics/characters/player/Left1.png"));
+    private Image playerLeft2 = ImageHandler.staticGetImage(("graphics/characters/player/Left2.png"));
+    private Image playerRight = ImageHandler.staticGetImage(("graphics/characters/player/Right.png"));
+    private Image playerRight1 = ImageHandler.staticGetImage(("graphics/characters/player/Right1.png"));
+    private Image playerRight2 = ImageHandler.staticGetImage(("graphics/characters/player/Right2.png"));
     public Player gold = new Player(10, 9, name, player);
     private boolean running = false;
     private int lastdir = 1;
@@ -182,27 +182,27 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     //-----------------------------------------------------------------
     // NPC's
     //-----------------------------------------------------------------
-    private Image baldman = ImageHandler.getImage(("graphics/characters/npc/BaldMan.png"));
-    private Image beauty = ImageHandler.getImage(("graphics/characters/npc/Beauty.png"));
-    private Image bill = ImageHandler.getImage(("graphics/characters/npc/Bill.png"));
-    private Image birdkeeperl = ImageHandler.getImage(("graphics/characters/npc/BirdKeeperL.png"));
-    private Image birdkeeperr = ImageHandler.getImage(("graphics/characters/npc/BirdKeeperR.png"));
-    private Image boy = ImageHandler.getImage(("graphics/characters/npc/Boy.png"));
-    private Image bugcatcher = ImageHandler.getImage(("graphics/characters/npc/BugCatcher.png"));
-    private Image camperd = ImageHandler.getImage(("graphics/characters/npc/CamperD.png"));
-    private Image camperl = ImageHandler.getImage(("graphics/characters/npc/CamperL.png"));
-    private Image falkner = ImageHandler.getImage(("graphics/characters/npc/Falkner.png"));
-    private Image fatman = ImageHandler.getImage(("graphics/characters/npc/FatMan.png"));
-    private Image fisher = ImageHandler.getImage(("graphics/characters/npc/Fisher.png"));
-    private Image guidegent = ImageHandler.getImage(("graphics/characters/npc/GuideGent.png"));
-    private Image lass = ImageHandler.getImage(("graphics/characters/npc/Lass.png"));
-    private Image mom = ImageHandler.getImage(("graphics/characters/npc/Mom.png"));
-    private Image mrpokemon = ImageHandler.getImage(("graphics/characters/npc/MrPokemon.png"));
-    private Image nurse = ImageHandler.getImage(("graphics/characters/npc/Nurse.png"));
-    private Image picknicker = ImageHandler.getImage(("graphics/characters/npc/Picknicker.png"));
-    private Image oak = ImageHandler.getImage(("graphics/characters/npc/ProfOak.png"));
-    private Image shopkeep = ImageHandler.getImage(("graphics/characters/npc/ShopKeep.png"));
-    private Image youngster = ImageHandler.getImage(("graphics/characters/npc/Youngster.png"));
+    private Image baldman = ImageHandler.staticGetImage(("graphics/characters/npc/BaldMan.png"));
+    private Image beauty = ImageHandler.staticGetImage(("graphics/characters/npc/Beauty.png"));
+    private Image bill = ImageHandler.staticGetImage(("graphics/characters/npc/Bill.png"));
+    private Image birdkeeperl = ImageHandler.staticGetImage(("graphics/characters/npc/BirdKeeperL.png"));
+    private Image birdkeeperr = ImageHandler.staticGetImage(("graphics/characters/npc/BirdKeeperR.png"));
+    private Image boy = ImageHandler.staticGetImage(("graphics/characters/npc/Boy.png"));
+    private Image bugcatcher = ImageHandler.staticGetImage(("graphics/characters/npc/BugCatcher.png"));
+    private Image camperd = ImageHandler.staticGetImage(("graphics/characters/npc/CamperD.png"));
+    private Image camperl = ImageHandler.staticGetImage(("graphics/characters/npc/CamperL.png"));
+    private Image falkner = ImageHandler.staticGetImage(("graphics/characters/npc/Falkner.png"));
+    private Image fatman = ImageHandler.staticGetImage(("graphics/characters/npc/FatMan.png"));
+    private Image fisher = ImageHandler.staticGetImage(("graphics/characters/npc/Fisher.png"));
+    private Image guidegent = ImageHandler.staticGetImage(("graphics/characters/npc/GuideGent.png"));
+    private Image lass = ImageHandler.staticGetImage(("graphics/characters/npc/Lass.png"));
+    private Image mom = ImageHandler.staticGetImage(("graphics/characters/npc/Mom.png"));
+    private Image mrpokemon = ImageHandler.staticGetImage(("graphics/characters/npc/MrPokemon.png"));
+    private Image nurse = ImageHandler.staticGetImage(("graphics/characters/npc/Nurse.png"));
+    private Image picknicker = ImageHandler.staticGetImage(("graphics/characters/npc/Picknicker.png"));
+    private Image oak = ImageHandler.staticGetImage(("graphics/characters/npc/ProfOak.png"));
+    private Image shopkeep = ImageHandler.staticGetImage(("graphics/characters/npc/ShopKeep.png"));
+    private Image youngster = ImageHandler.staticGetImage(("graphics/characters/npc/Youngster.png"));
     private NPC viloet_citizen1 = new NPC(42, 30, "Citizen", "We care about the traditional buildings around here.", baldman, null);
     private NPC viloet_citizen2 = new NPC(34, 34, "Citizen", "It is rumored that there are ghost pokemon in the Sprout Tower.", bill, null);
     private NPC viloet_citizen3 = new NPC(30, 23, "Citizen", "Hey, your a pokemon trainer! If you beat the gym leader, you'll be ready for the big time.", camperl, null);
@@ -270,8 +270,8 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     private MenuScene menu;
     public boolean inMenu = false;
     private boolean disable_start = false;
-    private Image arrow = ImageHandler.getImage(("graphics/pictures/Arrow.png"));
-    private Image messagebox = ImageHandler.getImage(("graphics/pictures/Message_Text.png"));
+    private Image arrow = ImageHandler.staticGetImage(("graphics/pictures/Arrow.png"));
+    private Image messagebox = ImageHandler.staticGetImage(("graphics/pictures/Message_Text.png"));
     //-----------------------------------------------------------------
     //-----------------------------------------------------------------
     // Sound Variables
@@ -1593,7 +1593,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
         List<String> file = FileHandler.ReadInternalFile("/net/daboross/will/pokemon/data/Tiles.tileset");
         ListIterator<String> fileIter = file.listIterator();
         for (int i = 0; i < tileset.length; i++) {
-            tileset[i] = ImageHandler.getImage("/graphics/" + fileIter.next());
+            tileset[i] = ImageHandler.staticGetImage("/graphics/" + fileIter.next());
         }
     }
 

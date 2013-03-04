@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import net.daboross.engine.ImageHandler;
+import net.daboross.gameengine.graphics.ImageHandler;
 
 public final class MenuScene {
 
@@ -29,23 +29,23 @@ public final class MenuScene {
     public Monsters enemyPokemon;
     public Items[] battleItems;
     public boolean cancelbutton = false;
-    private Image arrow = ImageHandler.getImage("graphics/pictures/Arrow.png");
-    private Image mainMenu = ImageHandler.getImage("graphics/pictures/Menu.png");
-    private Image pokedex = ImageHandler.getImage("graphics/pictures/pokedexbg.png");
-    private Image pokemon = ImageHandler.getImage("graphics/pictures/pokeselbg.png");
-    private Image bag = ImageHandler.getImage("graphics/pictures/BagScreen.png");
-    private Image pokegear = ImageHandler.getImage("graphics/pictures/Pokegearback.png");
-    private Image trainercard = ImageHandler.getImage("graphics/pictures/TrainerCard.png");
-    private Image save = ImageHandler.getImage("graphics/pictures/Save.png");
-    private Image option = ImageHandler.getImage("graphics/pictures/Option.png");
-    private Image partyscreenfirstbox = ImageHandler.getImage("graphics/pictures/Box.png");
-    private Image partyscreenboxes = ImageHandler.getImage("graphics/pictures/SelectionBar.png");
-    private Image partyscreencancel = ImageHandler.getImage("graphics/pictures/pokeselcancel.png");
-    private Image partyscreencancelselect = ImageHandler.getImage("graphics/pictures/pokeselcancelsel.png");
-    private Image entryMap = ImageHandler.getImage("graphics/pictures/MapEntry.png");
-    private Image entryRadio = ImageHandler.getImage("graphics/pictures/RadioEntry.png");
-    private Image entryPhone = ImageHandler.getImage("graphics/pictures/PhoneEntry.png");
-    private Image entryExit = ImageHandler.getImage("graphics/pictures/ExitEntry.png");
+    private Image arrow = ImageHandler.staticGetImage("graphics/pictures/Arrow.png");
+    private Image mainMenu = ImageHandler.staticGetImage("graphics/pictures/Menu.png");
+    private Image pokedex = ImageHandler.staticGetImage("graphics/pictures/pokedexbg.png");
+    private Image pokemon = ImageHandler.staticGetImage("graphics/pictures/pokeselbg.png");
+    private Image bag = ImageHandler.staticGetImage("graphics/pictures/BagScreen.png");
+    private Image pokegear = ImageHandler.staticGetImage("graphics/pictures/Pokegearback.png");
+    private Image trainercard = ImageHandler.staticGetImage("graphics/pictures/TrainerCard.png");
+    private Image save = ImageHandler.staticGetImage("graphics/pictures/Save.png");
+    private Image option = ImageHandler.staticGetImage("graphics/pictures/Option.png");
+    private Image partyscreenfirstbox = ImageHandler.staticGetImage("graphics/pictures/Box.png");
+    private Image partyscreenboxes = ImageHandler.staticGetImage("graphics/pictures/SelectionBar.png");
+    private Image partyscreencancel = ImageHandler.staticGetImage("graphics/pictures/pokeselcancel.png");
+    private Image partyscreencancelselect = ImageHandler.staticGetImage("graphics/pictures/pokeselcancelsel.png");
+    private Image entryMap = ImageHandler.staticGetImage("graphics/pictures/MapEntry.png");
+    private Image entryRadio = ImageHandler.staticGetImage("graphics/pictures/RadioEntry.png");
+    private Image entryPhone = ImageHandler.staticGetImage("graphics/pictures/PhoneEntry.png");
+    private Image entryExit = ImageHandler.staticGetImage("graphics/pictures/ExitEntry.png");
     private JukeBox col = new JukeBox();
 
     public MenuScene(Pokemon pkmn) {

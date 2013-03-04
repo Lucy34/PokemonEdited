@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.Random;
-import net.daboross.engine.ImageHandler;
+import net.daboross.gameengine.graphics.ImageHandler;
 
 public final class BattleScene {
 
@@ -29,15 +29,15 @@ public final class BattleScene {
     public Monsters playerPokemon;
     public Monsters enemyPokemon;
     public Items[] battleItems;
-    private Image BG = ImageHandler.getImage(("graphics/graphics/BG.png"));
-    private Image battleMainBG = ImageHandler.getImage(("graphics/graphics/Battle.png"));
-    private Image battleFightBG = ImageHandler.getImage(("graphics/graphics/Battle2.png"));
-    private Image arrow = ImageHandler.getImage(("graphics/graphics/Arrow.png"));
-    private Image statusPAR = ImageHandler.getImage(("graphics/graphics/StatusPAR.png"));
-    private Image statusBRN = ImageHandler.getImage(("graphics/graphics/StatusBRN.png"));
-    private Image statusPSN = ImageHandler.getImage(("graphics/graphics/StatusPSN.png"));
-    private Image statusSLP = ImageHandler.getImage(("graphics/graphics/StatusSLP.png"));
-    private Image statusFRZ = ImageHandler.getImage(("graphics/graphics/StatusFRZ.png"));
+    private Image BG = ImageHandler.staticGetImage(("graphics/graphics/BG.png"));
+    private Image battleMainBG = ImageHandler.staticGetImage(("graphics/graphics/Battle.png"));
+    private Image battleFightBG = ImageHandler.staticGetImage(("graphics/graphics/Battle2.png"));
+    private Image arrow = ImageHandler.staticGetImage(("graphics/graphics/Arrow.png"));
+    private Image statusPAR = ImageHandler.staticGetImage(("graphics/graphics/StatusPAR.png"));
+    private Image statusBRN = ImageHandler.staticGetImage(("graphics/graphics/StatusBRN.png"));
+    private Image statusPSN = ImageHandler.staticGetImage(("graphics/graphics/StatusPSN.png"));
+    private Image statusSLP = ImageHandler.staticGetImage(("graphics/graphics/StatusSLP.png"));
+    private Image statusFRZ = ImageHandler.staticGetImage(("graphics/graphics/StatusFRZ.png"));
     private JukeBox col = new JukeBox();
 
     public BattleScene(Pokemon pkmn, Monsters[] playerparty, Monsters wild, Items[] items) {
