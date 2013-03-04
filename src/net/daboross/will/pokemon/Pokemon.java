@@ -24,6 +24,7 @@ import java.util.Random;
 import java.util.StringTokenizer;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import net.daboross.gameengine.FileHandler;
 import net.daboross.gameengine.graphics.ImageHandler;
 
@@ -45,7 +46,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     // Window and Window Accesories
     //-----------------------------------------------------------------
     public static JFrame jf;
-    private javax.swing.Timer gameTimer;
+    private Timer gameTimer;
     private Font pokefont = new Font("pokesl1", Font.PLAIN, 18);
     private Image titlescreen = ImageHandler.staticGetImage(("graphics/titles/Pic_2.png"));
     private Image start_symbol = ImageHandler.staticGetImage(("graphics/titles/Start.png"));
@@ -306,7 +307,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(480, 320));
         addKeyListener(this);
-        gameTimer = new javax.swing.Timer(350, this);
+        gameTimer = new Timer(350, this);
         gameTimer.start();
     }
 
@@ -315,7 +316,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     //-----------------------------------------------------------------
     @Override
     public void actionPerformed(ActionEvent e) {
-        currentTime = java.lang.System.currentTimeMillis();
+        currentTime = System.currentTimeMillis();
         if (gamestarted == true) {
             //-----------------------------------------------------------------
             // Battle Scene
@@ -380,20 +381,21 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
             movable_right = true;
             if (noClip == false) {
                 for (int i = 0; i < currentMapNPC.length; i++) {
-                    if (gold.crashTest(currentMapNPC[i]) == 1) {
+                    int crashResult = gold.crashTest(currentMapNPC[i]);
+                    if (crashResult == 1) {
                         movable_up = false;
                         disable_talk = false;
-                    } else if (gold.crashTest(currentMapNPC[i]) == 2) {
+                    } else if (crashResult == 2) {
                         movable_down = false;
                         disable_talk = false;
-                    } else if (gold.crashTest(currentMapNPC[i]) == 3) {
+                    } else if (crashResult == 3) {
                         movable_left = false;
                         disable_talk = false;
-                    } else if (gold.crashTest(currentMapNPC[i]) == 4) {
+                    } else if (crashResult == 4) {
                         movable_right = false;
                         disable_talk = false;
                     }
-                    if (gold.crashTest(currentMapNPC[i]) != 0) {
+                    if (crashResult != 0) {
                         if (collision == true) {
                             //  col.playClip("Collision");
                             collision = false;
@@ -402,19 +404,20 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
                 }
                 //Crashtesting with Inpassible Objects
                 for (int i = 0; i < currentMapStaticTiles.length; i++) {
-                    if (gold.crashTest(currentMapStaticTiles[i]) == 1) {
+                    int crashResult = gold.crashTest(currentMapStaticTiles[i]);
+                    if (crashResult == 1) {
                         movable_up = false;
                     }
-                    if (gold.crashTest(currentMapStaticTiles[i]) == 2) {
+                    if (crashResult == 2) {
                         movable_down = false;
                     }
-                    if (gold.crashTest(currentMapStaticTiles[i]) == 3) {
+                    if (crashResult == 3) {
                         movable_left = false;
                     }
-                    if (gold.crashTest(currentMapStaticTiles[i]) == 4) {
+                    if (crashResult == 4) {
                         movable_right = false;
                     }
-                    if (gold.crashTest(currentMapStaticTiles[i]) != 0) {
+                    if (crashResult != 0) {
                         if (collision == true) {
                             // col.playClip("Collision");
                             collision = false;
@@ -1142,15 +1145,6 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     }
 
     public void transfer() {
-        //Music
-	 	/*if (posX_tile == 73 && posY_tile == 94) {
-         if (down == true) {
-         changeBGM(cherrygrovecity);
-         }
-         if (up == true) {
-         changeBGM(route30);
-         }
-         }*/
         //Cherrygrove to PokeCenter
         if (posX_tile == 85 && posY_tile == 99) {
             currentX_loc -= 43;
@@ -1245,7 +1239,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
                     changeBGM(violetcity);
                     break;
                 default:
-                    System.out.println("Haaaaaaaaaaaaaaaaaaaax");
+                    System.out.println("ERRR");
                     break;
             }
         }
@@ -1267,7 +1261,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
                     changeBGM(violetcity);
                     break;
                 default:
-                    System.out.println("Haaaaaaaaaaaaaaaaaaaax");
+                    System.out.println("ERRRR");
                     break;
             }
         }
@@ -1523,7 +1517,6 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     }
 
     public void saveGame() {
-        BufferedWriter bufferedWriter = null;
         try {
             File oldsave = new File("Data/profile.sav");
             oldsave.delete();
@@ -1548,15 +1541,6 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
             ex.printStackTrace(System.err);
         } catch (IOException ex) {
             ex.printStackTrace(System.err);
-        } finally {
-            try {
-                if (bufferedWriter != null) {
-                    bufferedWriter.flush();
-                    bufferedWriter.close();
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace(System.err);
-            }
         }
     }
 
@@ -1607,30 +1591,31 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
         List<String> fileList = FileHandler.ReadInternalFile(map);
         ListIterator<String> iterator = fileList.listIterator();
         String line = iterator.next();
-        StringTokenizer tokens = new StringTokenizer(line);
-        int width = Integer.parseInt(tokens.nextToken());
-        int height = Integer.parseInt(tokens.nextToken());
+        StringTokenizer tokenodls = new StringTokenizer(line);
+        String[] tokens = line.split("\\s");
+        int width = Integer.parseInt(tokens[0]);
+        int height = Integer.parseInt(tokens[1]);
         mapTilesX = width;
         mapTilesY = height;
-        String tilesetV = tokens.nextToken();
+        String tilesetV = tokens[2];
         line = iterator.next();
-        tokens = new StringTokenizer(line);
-        if (tokens.nextToken().equalsIgnoreCase("colorization")) {
+        tokens = line.split("\\s");
+        if (tokens[0].equalsIgnoreCase("colorization")) {
             hasColourEffect = true;
-            rV = Float.parseFloat(tokens.nextToken());
-            g = Float.parseFloat(tokens.nextToken());
-            b = Float.parseFloat(tokens.nextToken());
-            h = Float.parseFloat(tokens.nextToken());
-            s = Float.parseFloat(tokens.nextToken());
+            rV = Float.parseFloat(tokens[1]);
+            g = Float.parseFloat(tokens[2]);
+            b = Float.parseFloat(tokens[3]);
+            h = Float.parseFloat(tokens[4]);
+            s = Float.parseFloat(tokens[5]);
         }
         while (!line.equals(".")) {
             line = iterator.next();
         }
         for (int layers = 0; layers < 2; layers++) {
             line = iterator.next();
-            tokens = new StringTokenizer(line);
+            tokens = line.split("\\s");
             for (int y = 0; y < (width * height); y++) {
-                String code = tokens.nextToken();
+                String code = tokens[y];
                 if (layers == 0) {
                     currentMap0[y] = Integer.parseInt(code);
                 } else if (layers == 1) {
