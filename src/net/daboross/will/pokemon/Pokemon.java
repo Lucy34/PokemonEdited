@@ -342,7 +342,10 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
                     encounter.Win();
                 }
                 if (encounter.playerTurn == false) {
-                    wait(1);
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException ex) {
+                    }
                     encounter.enemyTurn();
                 }
             }
@@ -1449,7 +1452,10 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
                 } else {
                     wildPokemon.create(158); //Creates a wild Totodile
                 }
-                wait(1);
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException ex) {
+                }
                 inBattle = true;
                 disable_start = true;
                 encounter = new BattleScene(this, pokemonparty, wildPokemon, items);
@@ -1632,14 +1638,6 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
                 }
             }
         }
-    }
-
-    public static void wait(int n) {
-        long t0, t1;
-        t0 = System.currentTimeMillis();
-        do {
-            t1 = System.currentTimeMillis();
-        } while ((t1 - t0) < (n * 1000));
     }
 
     public static void main(String[] Args) {
