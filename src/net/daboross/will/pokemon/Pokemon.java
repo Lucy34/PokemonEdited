@@ -1641,6 +1641,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     }
 
     public static void main(String[] Args) {
+        ImageHandler.setStaticImagePrefix("net/daboross/will/pokemon");
         //Create the window
         jf = new JFrame("Pokemon: Metallic Silver");
         //Create an instance of Pokemon and insert into the window
