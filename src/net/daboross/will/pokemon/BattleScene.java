@@ -29,15 +29,15 @@ public final class BattleScene {
     public Monsters playerPokemon;
     public Monsters enemyPokemon;
     public Items[] battleItems;
-    private Image BG = ImageHandler.staticGetImage(("graphics/graphics/BG.png"));
-    private Image battleMainBG = ImageHandler.staticGetImage(("graphics/graphics/Battle.png"));
-    private Image battleFightBG = ImageHandler.staticGetImage(("graphics/graphics/Battle2.png"));
-    private Image arrow = ImageHandler.staticGetImage(("graphics/graphics/Arrow.png"));
-    private Image statusPAR = ImageHandler.staticGetImage(("graphics/graphics/StatusPAR.png"));
-    private Image statusBRN = ImageHandler.staticGetImage(("graphics/graphics/StatusBRN.png"));
-    private Image statusPSN = ImageHandler.staticGetImage(("graphics/graphics/StatusPSN.png"));
-    private Image statusSLP = ImageHandler.staticGetImage(("graphics/graphics/StatusSLP.png"));
-    private Image statusFRZ = ImageHandler.staticGetImage(("graphics/graphics/StatusFRZ.png"));
+    private Image BG = ImageHandler.staticGetImage(("graphics/pictures/BG.png"));
+    private Image battleMainBG = ImageHandler.staticGetImage(("graphics/pictures/Battle.png"));
+    private Image battleFightBG = ImageHandler.staticGetImage(("graphics/pictures/Battle2.png"));
+    private Image arrow = ImageHandler.staticGetImage(("graphics/pictures/Arrow.png"));
+    private Image statusPAR = ImageHandler.staticGetImage(("graphics/pictures/StatusPAR.png"));
+    private Image statusBRN = ImageHandler.staticGetImage(("graphics/pictures/StatusBRN.png"));
+    private Image statusPSN = ImageHandler.staticGetImage(("graphics/pictures/StatusPSN.png"));
+    private Image statusSLP = ImageHandler.staticGetImage(("graphics/pictures/StatusSLP.png"));
+    private Image statusFRZ = ImageHandler.staticGetImage(("graphics/pictures/StatusFRZ.png"));
     private JukeBox col = new JukeBox();
 
     public BattleScene(Pokemon pkmn, Monsters[] playerparty, Monsters wild, Items[] items) {
