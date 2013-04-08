@@ -351,8 +351,8 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
      * ******************************************************
      */
     class TileButton extends JToggleButton implements ActionListener, MouseListener {
-        private static final long serialVersionUID = 1L;
 
+        private static final long serialVersionUID = 1L;
         Tile tile;
 
         public TileButton(Tile t) {
