@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 public class TileChooser extends JPanel implements ActionListener, GraphicsBankChangeListener {
 
+    private static final long serialVersionUID = 1L;
     //DropTarget dropTarget;
     ArrayList tiles;
     GridLayout layout;
@@ -67,7 +68,7 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
         createPropertiesDialog(dialogOwner);
     }
 
-    void createPropertiesDialog(JFrame dialogOwner) {
+    private void createPropertiesDialog(JFrame dialogOwner) {
 
         /* Setup for the proeprties dialog */
         propertiesDialog = new JDialog(dialogOwner, "Tile Properties");
@@ -156,7 +157,7 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
      * Rebuild the entire panel from the graphics bank
      *
      */
-    public void reset() {
+    public final void reset() {
         int count = 0;
         tilePanel.removeAll();
         group = new ButtonGroup();
@@ -166,7 +167,7 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
         group.add(b);
         count++;
 
-        Iterator i = gfx.iterator();
+        Iterator<Tile> i = gfx.iterator();
         while (i.hasNext()) {
             b = new TileButton((Tile) i.next());
             tilePanel.add(b);
@@ -193,6 +194,7 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
      * rebuild them
      *
      */
+    @Override
     public void tilesetUpdated(GraphicsBank g) {
         System.out.println("tilset updated");
         if (g == gfx) {
@@ -205,6 +207,7 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
      * and rebuild it.
      *
      */
+    @Override
     public void tileRemoved(GraphicsBank g, Tile t) {
         System.out.println("tilset updated");
         if (g == gfx) {
@@ -216,6 +219,7 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
      * Add a single tile button
      *
      */
+    @Override
     public void tileAdded(GraphicsBank g, Tile t) {
         System.out.println("tilset updated");
         TileButton b = new TileButton(t);
@@ -229,6 +233,7 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
         repaint();
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == applyBtn && propertyTile != null) {
             propertyTile.name = tileName.getText();
@@ -346,6 +351,7 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
      * ******************************************************
      */
     class TileButton extends JToggleButton implements ActionListener, MouseListener {
+        private static final long serialVersionUID = 1L;
 
         Tile tile;
 
@@ -370,22 +376,28 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
             this.addActionListener(this);
         }
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             selectedTile = tile;
         }
 
+        @Override
         public void mouseEntered(MouseEvent e) {
         }
 
+        @Override
         public void mouseExited(MouseEvent e) {
         }
 
+        @Override
         public void mousePressed(MouseEvent e) {
         }
 
+        @Override
         public void mouseReleased(MouseEvent e) {
         }
 
+        @Override
         public void mouseClicked(MouseEvent e) {
             if (SwingUtilities.isRightMouseButton(e)) {
                 showProperties(tile);
@@ -403,11 +415,14 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
      */
     class FileDropHandler extends TransferHandler {
 
+        private static final long serialVersionUID = 1L;
+
         /**
          * Determine whether we can or cannot accept the stuff the user is
          * dragging onto our panel. In this case we accept only file lists.
          *
          */
+        @Override
         public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
             //System.out.println("Got query by component: "+comp);
             for (int i = 0; i < transferFlavors.length; i++) {
@@ -426,29 +441,25 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
          * List.
          *
          */
+        @Override
         public boolean importData(JComponent comp, Transferable t) {
 //System.out.println("Import data");
             try {
-                java.util.List files = (java.util.List) t.getTransferData(DataFlavor.javaFileListFlavor);
+                java.util.List<File> files = (java.util.List<File>) t.getTransferData(DataFlavor.javaFileListFlavor);
                 if (files.size() > 4) {
                     /* Does not work. Forever halts the AWT thread.
                      if(!(PromptDialog.ask("Really process "+files.size()+" files?", "Yes", "Cancel").equals("Yes"))) {
                      return false;
                      } */
                 }
-                Iterator itr = files.iterator();
-//System.out.println("itr, size = "+files.size());
-                while (itr.hasNext()) {
-                    File f = (File) itr.next();
-//System.out.println("imported "+f);
+                for (File f : files) {
                     importImageAsTile(f);
-//System.out.println("done "+f);
                 }
             } catch (UnsupportedFlavorException e) {
                 System.err.println("Unsupported drop content: " + e);
             } catch (IOException e) {
                 System.err.println("Unexpected IO Exception while importing tile: " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.err);
                 //PromptDialog.tell("Sorry, something broke. Please save your work and restart the program.", "OK");
             }
             return true;

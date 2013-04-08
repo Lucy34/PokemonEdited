@@ -7,16 +7,16 @@ import java.awt.image.*;
 
 public class MapGame implements KeyListener {
 
-    static Scene scene;
-    static JFrame mainFrame;
-    static PlayerSprite player;
-    static Camera cam;
-    static BufferStrategy strat;
-    static long time;
-    boolean leftPressed = false;
-    boolean rightPressed = false;
-    boolean upPressed = false;
-    boolean downPressed = false;
+    private static Scene scene;
+    private static JFrame mainFrame;
+    private static PlayerSprite player;
+    private static Camera cam;
+    private static BufferStrategy strat;
+    private static long time;
+    private boolean leftPressed = false;
+    private boolean rightPressed = false;
+    private boolean upPressed = false;
+    private boolean downPressed = false;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -61,6 +61,7 @@ public class MapGame implements KeyListener {
                 break;
         }
     }
+    private static final Object lock = new Object();
 
     public static void main(String[] a) throws Exception {
 
@@ -86,7 +87,6 @@ public class MapGame implements KeyListener {
         cam.trackSprite(player);
 
         int iter = 0;
-
         while (true) {
             time = System.currentTimeMillis();
 
@@ -114,7 +114,9 @@ public class MapGame implements KeyListener {
                 mainFrame.createBufferStrategy(2);
                 strat = mainFrame.getBufferStrategy();
             }
-            Thread.sleep(15);
+            synchronized (lock) {
+                lock.wait(15);
+            }
         }
 
     }

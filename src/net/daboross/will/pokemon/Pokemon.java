@@ -1536,7 +1536,7 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
             stringsToWrite.add(String.valueOf(playerPokemon5.getNumber()));
             stringsToWrite.add(String.valueOf(playerPokemon6.getNumber()));
             stringsToWrite.add("'s Save File has been loaded.");
-            FileHandler.WriteFile(newsave, stringsToWrite);
+            FileHandler.writeFile(newsave, stringsToWrite);
         } catch (FileNotFoundException ex) {
             ex.printStackTrace(System.err);
         } catch (IOException ex) {

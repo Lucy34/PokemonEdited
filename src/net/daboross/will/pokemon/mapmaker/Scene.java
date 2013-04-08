@@ -25,13 +25,13 @@ public class Scene {
     float effect_hue = 0;
     float effect_sat = 1;
     Map map;
-    ArrayList sprites;
+    ArrayList<Sprite> sprites;
     GraphicsBank tileset;
 
     /**
      * creates a scene using the given map and sprites.
      */
-    public Scene(Map m, ArrayList s, GraphicsBank gfx) {
+    public Scene(Map m, ArrayList<Sprite> s, GraphicsBank gfx) {
         this.map = m;
         sprites = s;
         this.tileset = gfx;
@@ -106,7 +106,7 @@ public class Scene {
             }
         }
 
-        Scene scene = new Scene(map, new ArrayList(), gfx);
+        Scene scene = new Scene(map, new ArrayList<Sprite>(), gfx);
         scene.tileset = gfx;
         if (hasColourEffect) {
             System.out.println("Calling setEffect on scene recently loaded.");
@@ -191,7 +191,7 @@ public class Scene {
      */
     void logic() {
         for (int i = 0; i < sprites.size(); i++) {
-            Sprite s = (Sprite) sprites.get(i);
+            Sprite s = sprites.get(i);
             s.logic();
         }
     }
@@ -207,7 +207,7 @@ public class Scene {
         map.render(g, offsetX, offsetY);
 
         for (int i = 0; i < sprites.size(); i++) {
-            Sprite s = (Sprite) sprites.get(i);
+            Sprite s = sprites.get(i);
             //s.render(g, offsetX, offsetY);
         }
 

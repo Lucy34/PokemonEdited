@@ -3,7 +3,6 @@ package net.daboross.will.pokemon;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,18 +17,19 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
+import net.daboross.will.pokemon.JukeBox.Sound;
 
 public class JukeBox {
 
     private BackgroundSound bs;
-    private HashMap availableClips;
-    private HashMap playingClips;
+    private HashMap<String, List<Sound>> availableClips;
+    private HashMap<Integer, Sound> playingClips;
     private int nextClip = 0;
     private boolean debug;
 
     public JukeBox() {
-        availableClips = new HashMap();
-        playingClips = new HashMap();
+        availableClips = new HashMap<String, List<Sound>>();
+        playingClips = new HashMap<Integer, Sound>();
     }
 
     public void setDebug(boolean b) {
@@ -62,10 +62,10 @@ public class JukeBox {
         name = trimExtension(name);
 
         if (!availableClips.containsKey(name)) {
-            availableClips.put(name, new LinkedList());
+            availableClips.put(name, new LinkedList<Sound>());
         }
 
-        List list = (List) availableClips.get(name);
+        List<Sound> list = availableClips.get(name);
 
         AudioInputStream audioInputStream = null;
         try {
@@ -82,11 +82,7 @@ public class JukeBox {
         DataLine.Info info = new DataLine.Info(Clip.class, format);
         Sound clip;
         try {
-            clip = new Sound((Clip) AudioSystem.getLine(info),
-                    audioInputStream,
-                    name,
-                    nextClip++,
-                    this);
+            clip = new Sound((Clip) AudioSystem.getLine(info), audioInputStream, name, nextClip++, this);
             list.add(clip);
 
             audioInputStream.close();
@@ -94,11 +90,6 @@ public class JukeBox {
             e.printStackTrace(System.err);
             return false;
         }
-
-        if (clip == null) {
-            return false;
-        }
-
         return true;
     }
 
@@ -123,7 +114,7 @@ public class JukeBox {
         if (!availableClips.containsKey(name)) {
             return -1;
         }
-        List clips = (List) availableClips.get(name);
+        List<Sound> clips = availableClips.get(name);
         print("gonna playClip " + name + "" + " from the " + clips.size() + " available copies");
 
         print(Clip.LOOP_CONTINUOUSLY + "");
@@ -132,7 +123,7 @@ public class JukeBox {
             return -1;
         }
 
-        Sound clip = (Sound) clips.remove(0);
+        Sound clip = clips.remove(0);
         playingClips.put(new Integer(clip.getID()), clip);
         if (numberOfLoops == 1) {
             clip.play();
@@ -217,22 +208,20 @@ public class JukeBox {
     public synchronized void makeAvailable(Sound sound) {
         if (availableClips.containsKey(sound.getName())) {
             playingClips.remove(new Integer(sound.getID()));
-            ((List) availableClips.get(sound.getName())).add(sound);
+            (availableClips.get(sound.getName())).add(sound);
         }
     }
 
     public synchronized void stopClip(int id) {
         Integer ID = new Integer(id);
         if (playingClips.containsKey(ID)) {
-            Sound s = (Sound) playingClips.get(ID);
+            Sound s = playingClips.get(ID);
             s.stop();
         }
     }
 
     public synchronized void stopAllClips() {
-        Iterator it = playingClips.keySet().iterator();
-        while (it.hasNext()) {
-            Sound s = (Sound) playingClips.get((Integer) it.next());
+        for (Sound s : playingClips.values()) {
             s.stop();
         }
     }
@@ -314,14 +303,11 @@ public class JukeBox {
         private boolean kill;
         BackgroundSoundObserver bso;
 
-        public BackgroundSound(AudioInputStream ais,
-                SourceDataLine sdl) {
+        public BackgroundSound(AudioInputStream ais, SourceDataLine sdl) {
             this(ais, sdl, null);
         }
 
-        public BackgroundSound(AudioInputStream ais,
-                SourceDataLine sdl,
-                BackgroundSoundObserver bso) {
+        public BackgroundSound(AudioInputStream ais, SourceDataLine sdl, BackgroundSoundObserver bso) {
             this.ais = ais;
             this.sdl = sdl;
             this.bso = bso;

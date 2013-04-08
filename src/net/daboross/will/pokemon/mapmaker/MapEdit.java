@@ -213,7 +213,9 @@ public final class MapEdit implements ActionListener, ChangeListener, KeyListene
         while (true) {
             mapPanel.repaint();
             try {
-                Thread.sleep(1000);
+                synchronized (this) {
+                    this.wait(1000);
+                }
             } catch (InterruptedException e) {
                 System.out.println("wow... an interrupted exception. Never seen one before.");
             }
@@ -266,7 +268,9 @@ public final class MapEdit implements ActionListener, ChangeListener, KeyListene
         mainFrame.setJMenuBar(menuBar);
     }
 
-    class undoAction extends AbstractAction {
+    public class undoAction extends AbstractAction {
+
+        private static final long serialVersionUID = 1L;
 
         @Override
         public void actionPerformed(ActionEvent ae) {
@@ -275,7 +279,9 @@ public final class MapEdit implements ActionListener, ChangeListener, KeyListene
         }
     }
 
-    class redoAction extends AbstractAction {
+    public class redoAction extends AbstractAction {
+
+        private static final long serialVersionUID = 1L;
 
         @Override
         public void actionPerformed(ActionEvent ae) {
@@ -717,7 +723,7 @@ public final class MapEdit implements ActionListener, ChangeListener, KeyListene
          System.err.println("Could not load default graphics bank, using blank one.");
          gfx = new GraphicsBank();
          } */
-        scene = new Scene(new Map(10, 10), new ArrayList(), gfx);
+        scene = new Scene(new Map(10, 10), new ArrayList<Sprite>(), gfx);
         zoomLevel = 1;
         map = scene.getMap();
         setGraphicsBank(scene.getTileset());
