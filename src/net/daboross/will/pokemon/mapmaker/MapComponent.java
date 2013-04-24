@@ -231,15 +231,12 @@ public class MapComponent extends JComponent implements MouseListener, MouseMoti
              break;
              */
 
-
             default:
                 btn2Pressed = true;
-
 
                 grabX = e.getX();
                 grabY = e.getY();
                 System.out.println("Grab at " + grabX + ", " + grabY);
-
 
                 break;
         }

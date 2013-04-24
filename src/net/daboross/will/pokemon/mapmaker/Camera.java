@@ -41,7 +41,5 @@ public class Camera {
         viewx += speedx;
         viewy += speedy;
 
-
-
     }
 }

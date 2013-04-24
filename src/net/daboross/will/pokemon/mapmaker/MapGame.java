@@ -79,7 +79,6 @@ public class MapGame implements KeyListener {
         mainFrame.createBufferStrategy(2);
         strat = mainFrame.getBufferStrategy();
 
-
         scene = Scene.loadScene("scenes/mySceneTest.dat");
         cam = new Camera();
         player = new PlayerSprite();
@@ -101,7 +100,6 @@ public class MapGame implements KeyListener {
 
                 strat.show();
                 g.dispose();
-
 
                 player.move(Sprite.DOWN_LEFT, (float) (Math.random() * 10));
 

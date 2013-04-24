@@ -136,14 +136,10 @@ public class Scene {
                 int width = map.getWidth();
                 int height = map.getHeight();
 
-
-
                 File wd = new File(file.getParentFile().getCanonicalFile().toString());
                 File ts = new File(tileset.getFile().getCanonicalFile().toString());
 
                 String relativePath = RelativePath.getRelativePath(wd, ts);
-
-
 
                 line = width + " " + height + " " + relativePath;
                 writer.println(line);
@@ -168,7 +164,6 @@ public class Scene {
                                 writer.print("0 ");
                             }
 
-
                         }
 
                     }
@@ -177,7 +172,6 @@ public class Scene {
 
                 writer.flush();
             }
-
 
         } catch (IOException e) {
             throw new RuntimeException("Could not save the level");

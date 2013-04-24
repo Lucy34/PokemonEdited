@@ -65,7 +65,6 @@ public class GraphicsBank {
         int lineCount;
         File tileFile;
 
-
         if (tiles.size() > 0) {
             isUnsaved = true;
         } else {
@@ -75,7 +74,6 @@ public class GraphicsBank {
         System.out.println(from);
         baseDirectory = from.getParentFile();
         this.loadedFrom = from;
-
 
         lineCount = 0;
         r = new BufferedReader(new FileReader(from));
@@ -126,7 +124,6 @@ public class GraphicsBank {
             }
 
             //System.out.println("New tile: "+id+", name = "+tokens[NAME]);
-
             Tile t;
 
             if (tokens.length > EXTRA) {

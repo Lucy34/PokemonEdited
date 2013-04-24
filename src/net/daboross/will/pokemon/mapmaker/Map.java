@@ -229,7 +229,6 @@ public class Map {
         newHeight = Math.max(1, newHeight);
         Tile[][][] newTiles = new Tile[newWidth][newHeight][newLayers];
 
-
         w = Math.min(newWidth, tiles.length);
         h = Math.min(newHeight, tiles[0].length);
         l = Math.min(newLayers, tiles[0][0].length);
@@ -308,7 +307,6 @@ public class Map {
          set[0].length == tiles[0].length &&
          set[0][0].length == tiles[0][0].length) {
          */
-
         for (int x = 0; x < tiles.length; x++) {
             for (int y = 0; y < tiles[0].length; y++) {
                 for (int l = 0; l < LAYERS; l++) {

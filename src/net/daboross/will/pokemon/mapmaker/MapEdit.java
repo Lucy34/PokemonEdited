@@ -135,10 +135,6 @@ public final class MapEdit implements ActionListener, ChangeListener, KeyListene
         innerToolPane.add(innerToolBar, BorderLayout.NORTH);
         outerToolPane.add(outerToolBar, BorderLayout.NORTH);
 
-
-
-
-
         /* TileChooser placement */
         chooserPanel = new JPanel(new BorderLayout());
 
@@ -170,16 +166,11 @@ public final class MapEdit implements ActionListener, ChangeListener, KeyListene
         settingsPanel.setBorder(new TitledBorder("Settings"));
         settingsPanel.add(colorDialog, BorderLayout.CENTER);
 
-
-
-
-
         tabPane.add("Settings", settingsPanel);
 
 
         /* Scrollable map panel creation and placement */
         mapPanel = new MapComponent(map, this);
-
 
         mapScroll = new JScrollPane(mapPanel);
         mapPanel.setViewport(mapScroll.getViewport());
@@ -206,8 +197,6 @@ public final class MapEdit implements ActionListener, ChangeListener, KeyListene
 
         /* Positioning of the colour chooser dialog */
         //colorDialog.setLocationRelativeTo(mainFrame);
-
-
         /* Continuous repaint every second. This should be eliminated.
          * If it is even necessary at all, it's only due to bugs. */
         while (true) {
@@ -345,14 +334,10 @@ public final class MapEdit implements ActionListener, ChangeListener, KeyListene
         undoMI.setAccelerator(KeyStroke.getKeyStroke(new Character('Z'), Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         redoMI.setAccelerator(KeyStroke.getKeyStroke(new Character('Y'), Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 
-
-
         ((JPanel) mainFrame.getContentPane()).getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_MASK), "Undo");
         ((JPanel) mainFrame.getContentPane()).getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_MASK), "Redo");
         ((JPanel) mainFrame.getContentPane()).getActionMap().put("Undo", new undoAction());
         ((JPanel) mainFrame.getContentPane()).getActionMap().put("Redo", new redoAction());
-
-
 
         outerToolBar.add(newBtn);
         outerToolBar.add(openBtn);
@@ -379,12 +364,10 @@ public final class MapEdit implements ActionListener, ChangeListener, KeyListene
         outerToolBar.add(zoomFullBtn);
         outerToolBar.add(zoomOutBtn);
 
-
         //outerToolBar.addSeparator();
         //outerToolBar.add(palletteBtn);
 
         /* quick hack */
-
         if (compactToolbars) {
             innerToolBar = outerToolBar;
             outerToolBar.addSeparator();
@@ -540,6 +523,7 @@ public final class MapEdit implements ActionListener, ChangeListener, KeyListene
             }
         } else if (source == exitMI) {
             mainFrame.dispose(); /* TODO: "Do you want to save?" */
+
             System.exit(0);
         } /**
          * *******************
@@ -700,6 +684,7 @@ public final class MapEdit implements ActionListener, ChangeListener, KeyListene
             s.setValue((int) (scene.effect_sat * 100));
 
             openFile = file; /* TODO: bad variable name */
+
             mainFrame.validate();
             mapPanel.validate();
             mainFrame.repaint();

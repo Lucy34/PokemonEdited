@@ -184,7 +184,6 @@ public class Tile {
 
             initEffectImage();
 
-
             float[] hsbVals = new float[3];
             Color rgbVals;
 
@@ -193,7 +192,6 @@ public class Tile {
             int pixelData[] = new int[(zoomWidth * zoomHeight * 4)];
 
             pixelData = raster.getPixels(0, 0, zoomWidth, zoomHeight, pixelData);
-
 
             for (int i = 0; i < pixelData.length / 4; i++) {
 

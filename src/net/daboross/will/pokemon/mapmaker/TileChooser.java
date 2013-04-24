@@ -51,7 +51,6 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
         //spacer.setPreferredSize(gfx.getBaseTileSize());
         this.add(spacer, BorderLayout.CENTER);
 
-
         this.gfx = gfx;
         reset();
 
@@ -96,7 +95,6 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
 
         c.gridx = 0;
         c.gridy = 0;
-
 
         btns1.add(new JLabel("ID"), c);
         c.gridx = 1;
@@ -183,7 +181,6 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
             //spacer.setText("  Drop new tiles");
             spacer.setPreferredSize(new Dimension(1, 30));
         }
-
 
         tilePanel.revalidate();
         repaint();
@@ -318,8 +315,6 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
             }
         }
 
-
-
         System.out.println("Import " + f);
         try {
             ImageIO.read(f);
@@ -335,7 +330,6 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
         int n = gfx.getUnusedNumber();
         System.out.println("?2");
         Tile t = new Tile(n, f.getAbsolutePath(), "New Tile " + n, "No Type");
-
 
         System.out.println("Adding " + f);
         gfx.add(t);
@@ -367,7 +361,6 @@ public class TileChooser extends JPanel implements ActionListener, GraphicsBankC
             }
 
             setIcon(new ImageIcon(i2));
-
 
             setMargin(new Insets(2, 2, 2, 2));
             tile = t;
