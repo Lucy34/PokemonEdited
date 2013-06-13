@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,6 +27,7 @@ import javax.swing.Timer;
 import net.daboross.gameengine.FileHandler;
 import net.daboross.gameengine.graphics.ImageHandler;
 
+@SuppressWarnings("serial")
 public class Pokemon extends JPanel implements KeyListener, ActionListener {
     //-----------------------------------------------------------------
     // Pokemon: Metallic Silver
@@ -39,32 +39,32 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     //-----------------------------------------------------------------
     // DEBUG Variables
     //-----------------------------------------------------------------
-    private boolean noClip = false;
-    private boolean noBattle = false;
+    private final boolean noClip = false;
+    private final boolean noBattle = false;
     //-----------------------------------------------------------------
     //-----------------------------------------------------------------
     // Window and Window Accesories
     //-----------------------------------------------------------------
     public static JFrame jf;
-    private Timer gameTimer;
-    private Font pokefont = new Font("pokesl1", Font.PLAIN, 18);
-    private Image titlescreen = ImageHandler.staticGetImage(("graphics/titles/Pic_2.png"));
-    private Image start_symbol = ImageHandler.staticGetImage(("graphics/titles/Start.png"));
-    private Image continuescreen = ImageHandler.staticGetImage(("graphics/pictures/Continue.png"));
+    private final Timer gameTimer;
+    private final Font pokefont = new Font("pokesl1", Font.PLAIN, 18);
+    private final Image titlescreen = ImageHandler.staticGetImage(("graphics/titles/Pic_2.png"));
+    private final Image start_symbol = ImageHandler.staticGetImage(("graphics/titles/Start.png"));
+    private final Image continuescreen = ImageHandler.staticGetImage(("graphics/pictures/Continue.png"));
     private boolean atTitle = true;
     private boolean atContinueScreen = false;
     private boolean start_visible = true;
     private boolean gamestarted = false;
     private int offsetX = 0, offsetY = 0;
-    private int TILE_WIDTH_PIXELS = 32;
-    private int TILE_HEIGHT_PIXELS = 32;
+    private final int TILE_WIDTH_PIXELS = 32;
+    private final int TILE_HEIGHT_PIXELS = 32;
     private int concurrentMenuItem = 0;
     public long seconds = 0;
     public long oldTime;
     public long minutes = 0;
     public long hours = 0;
-    private MidiPlayer title = new MidiPlayer("audio/BGM/Title.mid", true);
-    private MidiPlayer continuebgm = new MidiPlayer("audio/BGM/Continue.mid", true);
+    private final MidiPlayer title = new MidiPlayer("audio/BGM/Title.mid", true);
+    private final MidiPlayer continuebgm = new MidiPlayer("audio/BGM/Continue.mid", true);
     //-----------------------------------------------------------------
     //-----------------------------------------------------------------
     // Player Variables
@@ -73,24 +73,22 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     public int trainerID;
     public Image cardSprite = ImageHandler.staticGetImage(("graphics/characters/battle/trainer000.png"));
     private Image player = ImageHandler.staticGetImage(("graphics/characters/player/Down.png"));
-    private Image playerUp = ImageHandler.staticGetImage(("graphics/characters/player/Up.png"));
-    private Image playerUp1 = ImageHandler.staticGetImage(("graphics/characters/player/Up1.png"));
-    private Image playerUp2 = ImageHandler.staticGetImage(("graphics/characters/player/Up2.png"));
-    private Image playerDown = ImageHandler.staticGetImage(("graphics/characters/player/Down.png"));
-    private Image playerDown1 = ImageHandler.staticGetImage(("graphics/characters/player/Down1.png"));
-    private Image playerDown2 = ImageHandler.staticGetImage(("graphics/characters/player/Down2.png"));
-    private Image playerLeft = ImageHandler.staticGetImage(("graphics/characters/player/Left.png"));
-    private Image playerLeft1 = ImageHandler.staticGetImage(("graphics/characters/player/Left1.png"));
-    private Image playerLeft2 = ImageHandler.staticGetImage(("graphics/characters/player/Left2.png"));
-    private Image playerRight = ImageHandler.staticGetImage(("graphics/characters/player/Right.png"));
-    private Image playerRight1 = ImageHandler.staticGetImage(("graphics/characters/player/Right1.png"));
-    private Image playerRight2 = ImageHandler.staticGetImage(("graphics/characters/player/Right2.png"));
+    private final Image playerUp = ImageHandler.staticGetImage(("graphics/characters/player/Up.png"));
+    private final Image playerUp1 = ImageHandler.staticGetImage(("graphics/characters/player/Up1.png"));
+    private final Image playerUp2 = ImageHandler.staticGetImage(("graphics/characters/player/Up2.png"));
+    private final Image playerDown = ImageHandler.staticGetImage(("graphics/characters/player/Down.png"));
+    private final Image playerDown1 = ImageHandler.staticGetImage(("graphics/characters/player/Down1.png"));
+    private final Image playerDown2 = ImageHandler.staticGetImage(("graphics/characters/player/Down2.png"));
+    private final Image playerLeft = ImageHandler.staticGetImage(("graphics/characters/player/Left.png"));
+    private final Image playerLeft1 = ImageHandler.staticGetImage(("graphics/characters/player/Left1.png"));
+    private final Image playerLeft2 = ImageHandler.staticGetImage(("graphics/characters/player/Left2.png"));
+    private final Image playerRight = ImageHandler.staticGetImage(("graphics/characters/player/Right.png"));
+    private final Image playerRight1 = ImageHandler.staticGetImage(("graphics/characters/player/Right1.png"));
+    private final Image playerRight2 = ImageHandler.staticGetImage(("graphics/characters/player/Right2.png"));
     public Player gold = new Player(10, 9, name, player);
-    private boolean running = false;
-    private int lastdir = 1;
     private int movespritepixels = 0;
     private boolean walking = false;
-    private boolean moving = false;
+    private final boolean moving = false;
     private boolean up = false;
     private boolean down = false;
     private boolean left = false;
@@ -104,14 +102,14 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     private boolean collision = false;
     private boolean footsprite = false;
     private String text = "";
-    private int posX = 224; //Multiple of 32
-    private int posY = 118; //-10 because height is 42, not 32.
+    private final int posX = 224; //Multiple of 32
+    private final int posY = 118; //-10 because height is 42, not 32.
     private int currentX_loc; //Starting Location of player in terms of rows
     private int currentY_loc; //Starting Location of player in terms of columns
     private int posX_tile; //Location of player in terms of rows
     private int posY_tile; //Location of player in terms of columns
     private boolean movable = true;
-    private static Random randGen = new Random();
+    private static final Random randGen = new Random();
     private int stepscount = 0;
     public int badges = 0;
     public int money = 2000;
@@ -130,18 +128,17 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     public Items[][] mainitems = new Items[30][99];
     public Items[][] balls = new Items[30][99];
     public Items[][] keyitems = new Items[30][99];
-    private Items potion = new Items(1);
+    private final Items potion = new Items(1);
     //-----------------------------------------------------------------
     //-----------------------------------------------------------------
     // Map Variables
     //-----------------------------------------------------------------
-    private Image[] tileset = new Image[1112];
-    private String Johto = "net/daboross/will/pokemon/data/Johto.map";
+    private final Image[] tileset = new Image[1112];
+    private final String Johto = "net/daboross/will/pokemon/data/Johto.map";
     private String currentMap = "Cherrygrove City";
-    private String currentMapName = Johto;
-    private boolean changemap = false;
+    private final String currentMapName = Johto;
     private boolean tilesLoaded = false;
-    private int[] impassibleTiles = new int[]{
+    private final int[] impassibleTiles = new int[]{
         3, 4, 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 18, 19,
         20, 21, 22, 23, 24, 40, 41, 42, 48, 49, 50, 51,
         52, 56, 57, 58, 59, 60, 61, 64, 65, 66, 67, 68,
@@ -170,65 +167,64 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
         736, 737, 738, 739, 740, 741, 742, 743, 746, 770,
         771, 772, 773, 774, 775, 798, 762, 764, 765, 769,
         515, 512, 520, 521, 528, 529};
-    private int[] currentMap0 = new int[12500];
-    private int[] currentMap1 = new int[12500];
-    private StaticTile[] currentMapStaticTiles = new StaticTile[12500];
+    private final int[] currentMap0 = new int[12500];
+    private final int[] currentMap1 = new int[12500];
+    private final StaticTile[] currentMapStaticTiles = new StaticTile[12500];
     private int mapTilesX;
     private int mapTilesY;
     private int x_coor = 0;
     private int y_coor = 0;
     private int tile_number = 0;
-    private boolean showmessagebox = false;
     //-----------------------------------------------------------------
     //-----------------------------------------------------------------
     // NPC's
     //-----------------------------------------------------------------
-    private Image baldman = ImageHandler.staticGetImage(("graphics/characters/npc/BaldMan.png"));
-    private Image beauty = ImageHandler.staticGetImage(("graphics/characters/npc/Beauty.png"));
-    private Image bill = ImageHandler.staticGetImage(("graphics/characters/npc/Bill.png"));
-    private Image birdkeeperl = ImageHandler.staticGetImage(("graphics/characters/npc/BirdKeeperL.png"));
-    private Image birdkeeperr = ImageHandler.staticGetImage(("graphics/characters/npc/BirdKeeperR.png"));
-    private Image boy = ImageHandler.staticGetImage(("graphics/characters/npc/Boy.png"));
-    private Image bugcatcher = ImageHandler.staticGetImage(("graphics/characters/npc/BugCatcher.png"));
-    private Image camperd = ImageHandler.staticGetImage(("graphics/characters/npc/CamperD.png"));
-    private Image camperl = ImageHandler.staticGetImage(("graphics/characters/npc/CamperL.png"));
-    private Image falkner = ImageHandler.staticGetImage(("graphics/characters/npc/Falkner.png"));
-    private Image fatman = ImageHandler.staticGetImage(("graphics/characters/npc/FatMan.png"));
-    private Image fisher = ImageHandler.staticGetImage(("graphics/characters/npc/Fisher.png"));
-    private Image guidegent = ImageHandler.staticGetImage(("graphics/characters/npc/GuideGent.png"));
-    private Image lass = ImageHandler.staticGetImage(("graphics/characters/npc/Lass.png"));
-    private Image mom = ImageHandler.staticGetImage(("graphics/characters/npc/Mom.png"));
-    private Image mrpokemon = ImageHandler.staticGetImage(("graphics/characters/npc/MrPokemon.png"));
-    private Image nurse = ImageHandler.staticGetImage(("graphics/characters/npc/Nurse.png"));
-    private Image picknicker = ImageHandler.staticGetImage(("graphics/characters/npc/Picknicker.png"));
-    private Image oak = ImageHandler.staticGetImage(("graphics/characters/npc/ProfOak.png"));
-    private Image shopkeep = ImageHandler.staticGetImage(("graphics/characters/npc/ShopKeep.png"));
-    private Image youngster = ImageHandler.staticGetImage(("graphics/characters/npc/Youngster.png"));
-    private NPC viloet_citizen1 = new NPC(42, 30, "Citizen", "We care about the traditional buildings around here.", baldman, null);
-    private NPC viloet_citizen2 = new NPC(34, 34, "Citizen", "It is rumored that there are ghost pokemon in the Sprout Tower.", bill, null);
-    private NPC viloet_citizen3 = new NPC(30, 23, "Citizen", "Hey, your a pokemon trainer! If you beat the gym leader, you'll be ready for the big time.", camperl, null);
-    private NPC viloet_citizen4 = new NPC(24, 26, "Citizen", "Falkner, from Violet City pokemon gym, is a fine trainer.", boy, null);
-    private NPC viloet_citizen5 = new NPC(11, 23, "Citizen", "You can't have your pokemon out with you in all places.", fatman, null);
-    private NPC violet_indoors1 = new NPC(8, 108, "Citizen", "There are many wild Pokemon in the tall grass.", baldman, null);
-    private NPC violet_indoors2 = new NPC(3, 107, "Citizen", "Do you want to trade Pokemon?", boy, null);
-    private NPC school_student1 = new NPC(23, 90, "Citizen", "I want to learn how to become a Pokemon Master.", youngster, null);
-    private NPC school_student2 = new NPC(25, 90, "Citizen", "What type of Pokemon is Pikachu?", boy, null);
-    private NPC school_student3 = new NPC(26, 90, "Citizen", "Are you a Pokemon trainer?", beauty, null);
-    private NPC school_student4 = new NPC(23, 88, "Citizen", "The Sprout Tower is a shrine to Bellsprout.", youngster, null);
-    private NPC school_student5 = new NPC(25, 86, "Citizen", "Whadaya want from me!", camperl, null);
-    private NPC school_student6 = new NPC(24, 84, "Citizen", "You're never too old to learn about Pokemon.", baldman, null);
-    private NPC mart_customer1 = new NPC(24, 106, "Citizen", "I wonder if they carry Pokeballs.", youngster, null);
-    private NPC store_clerk = new NPC(21, 107, "Citizen", "Can I help you with something?", shopkeep, null);
-    private NPC center_visitor1 = new NPC(40, 107, "Citizen", "You can heal your Pokemon by talking to Nurse Joy.", fatman, null);
-    private NPC nurse_joy = new NPC(42, 105, "Citizen", "We hope to see you again!", nurse, null);
-    private NPC bird_keeper1 = new NPC(5, 89, "Citizen", "I want to be like Falkner.", birdkeeperr, null);
-    private NPC bird_keeper2 = new NPC(10, 85, "Citizen", "Falkner is the best.", birdkeeperl, null);
-    private NPC leader_faulkner = new NPC(7, 81, "Citizen", "My precious bird Pokemon are unstopable.", falkner, null);
-    private NPC old_man1 = new NPC(88, 102, "Citizen", "I can guide you around cherrygrove!", guidegent, null);
-    private NPC cherrygrove_citizen1 = new NPC(84, 105, "Citizen", "I'm hungry.", fatman, null);
-    private NPC cherrygrove_citizen2 = new NPC(83, 108, "Citizen", "Cherrygrove City is beautiful.", lass, null);
-    private NPC cherrygrove_citizen3 = new NPC(78, 104, "Citizen", "Nothing interesting happens here.", boy, null);
-    private NPC[] currentMapNPC = new NPC[]{
+    private final Image baldman = ImageHandler.staticGetImage(("graphics/characters/npc/BaldMan.png"));
+    private final Image beauty = ImageHandler.staticGetImage(("graphics/characters/npc/Beauty.png"));
+    private final Image bill = ImageHandler.staticGetImage(("graphics/characters/npc/Bill.png"));
+    private final Image birdkeeperl = ImageHandler.staticGetImage(("graphics/characters/npc/BirdKeeperL.png"));
+    private final Image birdkeeperr = ImageHandler.staticGetImage(("graphics/characters/npc/BirdKeeperR.png"));
+    private final Image boy = ImageHandler.staticGetImage(("graphics/characters/npc/Boy.png"));
+    private final Image bugcatcher = ImageHandler.staticGetImage(("graphics/characters/npc/BugCatcher.png"));
+    private final Image camperd = ImageHandler.staticGetImage(("graphics/characters/npc/CamperD.png"));
+    private final Image camperl = ImageHandler.staticGetImage(("graphics/characters/npc/CamperL.png"));
+    private final Image falkner = ImageHandler.staticGetImage(("graphics/characters/npc/Falkner.png"));
+    private final Image fatman = ImageHandler.staticGetImage(("graphics/characters/npc/FatMan.png"));
+    private final Image fisher = ImageHandler.staticGetImage(("graphics/characters/npc/Fisher.png"));
+    private final Image guidegent = ImageHandler.staticGetImage(("graphics/characters/npc/GuideGent.png"));
+    private final Image lass = ImageHandler.staticGetImage(("graphics/characters/npc/Lass.png"));
+    private final Image mom = ImageHandler.staticGetImage(("graphics/characters/npc/Mom.png"));
+    private final Image mrpokemon = ImageHandler.staticGetImage(("graphics/characters/npc/MrPokemon.png"));
+    private final Image nurse = ImageHandler.staticGetImage(("graphics/characters/npc/Nurse.png"));
+    private final Image picknicker = ImageHandler.staticGetImage(("graphics/characters/npc/Picknicker.png"));
+    private final Image oak = ImageHandler.staticGetImage(("graphics/characters/npc/ProfOak.png"));
+    private final Image shopkeep = ImageHandler.staticGetImage(("graphics/characters/npc/ShopKeep.png"));
+    private final Image youngster = ImageHandler.staticGetImage(("graphics/characters/npc/Youngster.png"));
+    private final NPC viloet_citizen1 = new NPC(42, 30, "Citizen", "We care about the traditional buildings around here.", baldman, null);
+    private final NPC viloet_citizen2 = new NPC(34, 34, "Citizen", "It is rumored that there are ghost pokemon in the Sprout Tower.", bill, null);
+    private final NPC viloet_citizen3 = new NPC(30, 23, "Citizen", "Hey, your a pokemon trainer! If you beat the gym leader, you'll be ready for the big time.", camperl, null);
+    private final NPC viloet_citizen4 = new NPC(24, 26, "Citizen", "Falkner, from Violet City pokemon gym, is a fine trainer.", boy, null);
+    private final NPC viloet_citizen5 = new NPC(11, 23, "Citizen", "You can't have your pokemon out with you in all places.", fatman, null);
+    private final NPC violet_indoors1 = new NPC(8, 108, "Citizen", "There are many wild Pokemon in the tall grass.", baldman, null);
+    private final NPC violet_indoors2 = new NPC(3, 107, "Citizen", "Do you want to trade Pokemon?", boy, null);
+    private final NPC school_student1 = new NPC(23, 90, "Citizen", "I want to learn how to become a Pokemon Master.", youngster, null);
+    private final NPC school_student2 = new NPC(25, 90, "Citizen", "What type of Pokemon is Pikachu?", boy, null);
+    private final NPC school_student3 = new NPC(26, 90, "Citizen", "Are you a Pokemon trainer?", beauty, null);
+    private final NPC school_student4 = new NPC(23, 88, "Citizen", "The Sprout Tower is a shrine to Bellsprout.", youngster, null);
+    private final NPC school_student5 = new NPC(25, 86, "Citizen", "Whadaya want from me!", camperl, null);
+    private final NPC school_student6 = new NPC(24, 84, "Citizen", "You're never too old to learn about Pokemon.", baldman, null);
+    private final NPC mart_customer1 = new NPC(24, 106, "Citizen", "I wonder if they carry Pokeballs.", youngster, null);
+    private final NPC store_clerk = new NPC(21, 107, "Citizen", "Can I help you with something?", shopkeep, null);
+    private final NPC center_visitor1 = new NPC(40, 107, "Citizen", "You can heal your Pokemon by talking to Nurse Joy.", fatman, null);
+    private final NPC nurse_joy = new NPC(42, 105, "Citizen", "We hope to see you again!", nurse, null);
+    private final NPC bird_keeper1 = new NPC(5, 89, "Citizen", "I want to be like Falkner.", birdkeeperr, null);
+    private final NPC bird_keeper2 = new NPC(10, 85, "Citizen", "Falkner is the best.", birdkeeperl, null);
+    private final NPC leader_faulkner = new NPC(7, 81, "Citizen", "My precious bird Pokemon are unstopable.", falkner, null);
+    private final NPC old_man1 = new NPC(88, 102, "Citizen", "I can guide you around cherrygrove!", guidegent, null);
+    private final NPC cherrygrove_citizen1 = new NPC(84, 105, "Citizen", "I'm hungry.", fatman, null);
+    private final NPC cherrygrove_citizen2 = new NPC(83, 108, "Citizen", "Cherrygrove City is beautiful.", lass, null);
+    private final NPC cherrygrove_citizen3 = new NPC(78, 104, "Citizen", "Nothing interesting happens here.", boy, null);
+    private final NPC[] currentMapNPC = new NPC[]{
         viloet_citizen1,
         viloet_citizen2,
         viloet_citizen3,
@@ -268,29 +264,28 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     //-----------------------------------------------------------------
     // Menu Variables
     //-----------------------------------------------------------------
-    private MenuScene menu;
+    private final MenuScene menu;
     public boolean inMenu = false;
-    private boolean disable_start = false;
-    private Image arrow = ImageHandler.staticGetImage(("graphics/pictures/Arrow.png"));
-    private Image messagebox = ImageHandler.staticGetImage(("graphics/pictures/Message_Text.png"));
+    private final Image arrow = ImageHandler.staticGetImage(("graphics/pictures/Arrow.png"));
+    private final Image messagebox = ImageHandler.staticGetImage(("graphics/pictures/Message_Text.png"));
     //-----------------------------------------------------------------
     //-----------------------------------------------------------------
     // Sound Variables
     //-----------------------------------------------------------------
     public MidiPlayer currentBGM;
     public MidiPlayer lastBGM;
-    private MidiPlayer newbarktown = new MidiPlayer("audio/BGM/NewBarkTown.mid", true);
-    private MidiPlayer route29 = new MidiPlayer("audio/BGM/Route29.mid", true);
-    private MidiPlayer cherrygrovecity = new MidiPlayer("audio/BGM/CherrygroveCity.mid", true);
-    private MidiPlayer route30 = new MidiPlayer("audio/BGM/Route30.mid", true);
-    private MidiPlayer violetcity = new MidiPlayer("audio/BGM/VioletCity.mid", true);
-    private MidiPlayer pokecenter = new MidiPlayer("audio/BGM/PokemonCenter.mid", true);
-    private MidiPlayer pokemart = new MidiPlayer("audio/BGM/PokeMart.mid", true);
-    private MidiPlayer gym = new MidiPlayer("audio/BGM/Gym.mid", true);
-    private MidiPlayer championBGM = new MidiPlayer("audio/BGM/ChampionBattle.mid", true);
-    private MidiPlayer battleBGM = new MidiPlayer("audio/BGM/WildBattle.mid", true);
-    private MidiPlayer victoryjingle = new MidiPlayer("audio/SE/Wild_Victory.mid", false);
-    private JukeBox col = new JukeBox();
+    private final MidiPlayer newbarktown = new MidiPlayer("audio/BGM/NewBarkTown.mid", true);
+    private final MidiPlayer route29 = new MidiPlayer("audio/BGM/Route29.mid", true);
+    private final MidiPlayer cherrygrovecity = new MidiPlayer("audio/BGM/CherrygroveCity.mid", true);
+    private final MidiPlayer route30 = new MidiPlayer("audio/BGM/Route30.mid", true);
+    private final MidiPlayer violetcity = new MidiPlayer("audio/BGM/VioletCity.mid", true);
+    private final MidiPlayer pokecenter = new MidiPlayer("audio/BGM/PokemonCenter.mid", true);
+    private final MidiPlayer pokemart = new MidiPlayer("audio/BGM/PokeMart.mid", true);
+    private final MidiPlayer gym = new MidiPlayer("audio/BGM/Gym.mid", true);
+    private final MidiPlayer championBGM = new MidiPlayer("audio/BGM/ChampionBattle.mid", true);
+    private final MidiPlayer battleBGM = new MidiPlayer("audio/BGM/WildBattle.mid", true);
+    private final MidiPlayer victoryjingle = new MidiPlayer("audio/SE/Wild_Victory.mid", false);
+    private final JukeBox col = new JukeBox();
     //-----------------------------------------------------------------
 
     //-----------------------------------------------------------------
@@ -333,7 +328,6 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
                     posX_tile = 42;
                     posY_tile = 107;
                     gold.setSprite(playerUp);
-                    lastdir = 1;
                     playerPokemon1.healPokemon();
                     changeBGM(pokecenter);
                 }
@@ -1116,20 +1110,6 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_UP) {
-            lastdir = 1;
-        } else if (keyCode == KeyEvent.VK_DOWN) {
-            lastdir = 2;
-        } else if (keyCode == KeyEvent.VK_LEFT) {
-            lastdir = 3;
-        } else if (keyCode == KeyEvent.VK_RIGHT) {
-            lastdir = 4;
-        }
-    }
-
-    @Override
     public void keyTyped(KeyEvent e) {
     }
 
@@ -1451,7 +1431,6 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
                 } catch (InterruptedException ex) {
                 }
                 inBattle = true;
-                disable_start = true;
                 encounter = new BattleScene(this, pokemonparty, wildPokemon, items);
                 stepscount = 0;
                 try {
@@ -1645,5 +1624,10 @@ public class Pokemon extends JPanel implements KeyListener, ActionListener {
         //Set focus to the Panel
         jf.setVisible(true);
         pokemon.requestFocus(true);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        throw new UnsupportedOperationException("Pokemon: Not Created Yet!: keyReleased");
     }
 }
